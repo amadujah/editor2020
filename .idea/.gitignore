@@ -6,6 +6,5 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
-/../../../../../../:\Users\amad1\IdeaProjects\editor2020\.idea/
-
-/../../../../../../:\Users\amad1\IdeaProjects\editor2020\out/
+/.idea/
+/ out/
