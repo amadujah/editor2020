@@ -29,9 +29,9 @@ class EngineTest {
     @Test
     void getBufferContents() {
         assertEquals("", engine.getBufferContents(), "The buffer content is empty");
-        var word = "Insert this to the buffer";
-        engine.insert(word);
-        assertEquals(word, engine.getBufferContents());
+        var sentence = "Insert this to the buffer";
+        engine.insert(sentence);
+        assertEquals(sentence, engine.getBufferContents());
     }
 
     @Test
@@ -42,17 +42,40 @@ class EngineTest {
         selection.setBeginIndex(0);
         selection.setEndIndex(5);
         engine.copySelectedText();
-//        assertEquals(selection);
+        assertEquals("Copy", engine.getClipboardContents());
+        assertNotEquals("this", engine.getClipboardContents());
     }
 
     @Test
     void cutSelectedText() {
-        todo();
+        var word = "Copy this to clip";
+        engine.insert(word);
+        var bufferInitialLength = word.length();
+        Selection selection = engine.getSelection();
+        selection.setBeginIndex(0);
+        selection.setEndIndex(5);
+        engine.cutSelectedText();
+        assertEquals("Copy", engine.getClipboardContents());
+        assertEquals(" this to clip", engine.getBufferContents());
+        assertEquals(engine.getBufferContents().length(), bufferInitialLength - 4);
+        selection.setEndIndex(word.length());
+        engine.cutSelectedText();
+        assertEquals("", engine.getBufferContents());
     }
 
     @Test
     void copySelectedText() {
-        todo();
+        var word = "Copy this to clip";
+        engine.insert(word);
+        Selection selection = engine.getSelection();
+        selection.setBeginIndex(0);
+        selection.setEndIndex(5);
+        engine.copySelectedText();
+        assertEquals("Copy", engine.getClipboardContents());
+        assertEquals(word, engine.getBufferContents());
+        selection.setEndIndex(word.length());
+        engine.cutSelectedText();
+        assertEquals("", engine.getBufferContents());
     }
 
     @Test
