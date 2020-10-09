@@ -28,12 +28,21 @@ class EngineTest {
 
     @Test
     void getBufferContents() {
-        todo();
+        assertEquals("", engine.getBufferContents(), "The buffer content is empty");
+        var word = "Insert this to the buffer";
+        engine.insert(word);
+        assertEquals(word, engine.getBufferContents());
     }
 
     @Test
     void getClipboardContents() {
-        todo();
+        var word = "Copy this to clip";
+        engine.insert(word);
+        Selection selection = engine.getSelection();
+        selection.setBeginIndex(0);
+        selection.setEndIndex(5);
+        engine.copySelectedText();
+//        assertEquals(selection);
     }
 
     @Test
