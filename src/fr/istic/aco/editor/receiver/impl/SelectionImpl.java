@@ -35,11 +35,17 @@ public class SelectionImpl implements Selection {
 
     @Override
     public void setBeginIndex(int beginIndex) {
+        if (beginIndex < 0)
+            throw new IndexOutOfBoundsException("beginIndex is out of bounds");
+
         this.beginIndex = beginIndex;
     }
 
     @Override
     public void setEndIndex(int endIndex) {
+        if (endIndex < getBeginIndex())
+            throw new IndexOutOfBoundsException("endIndex is out of bounds");
+
         this.endIndex = endIndex;
     }
 }

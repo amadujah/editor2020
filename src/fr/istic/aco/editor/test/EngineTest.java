@@ -17,10 +17,6 @@ class EngineTest {
         engine = new EngineImpl();
     }
 
-    private void todo() {
-        fail("Unimplemented test");
-    }
-
     @Test
     @DisplayName("Buffer must be empty after initialisation")
     void getSelection() {
@@ -93,11 +89,55 @@ class EngineTest {
         selection.setEndIndex(selection.getBufferEndIndex());
         engine.pasteClipboard();
 
-        assertEquals(word +"Copy", engine.getBufferContents());
+        assertEquals(word + "Copy", engine.getBufferContents());
     }
 
     @Test
     void insert() {
+        String word = "Buffer content";
+        Selection selection = engine.getSelection();
 
+        engine.insert(word);
+
+        assertEquals(word, engine.getBufferContents());
+        selection.setBeginIndex(selection.getBufferEndIndex());
+        selection.setEndIndex(selection.getBufferEndIndex());
+        engine.insert("hello");
+
+        assertEquals(word + "hello", engine.getBufferContents());
+    }
+
+    @Test
+    void delete() {
+        String word = "Buffer content";
+        engine.insert(word);
+        engine.delete();
+        assertEquals(word, engine.getBufferContents());
+
+        Selection selection = engine.getSelection();
+        selection.setBeginIndex(0);
+        selection.setEndIndex(selection.getBufferEndIndex());
+        engine.delete();
+
+        assertEquals("", engine.getBufferContents());
+    }
+
+    @Test
+    void beginIndexMustNotBeNegative() {
+        Selection selection = engine.getSelection();
+        Throwable t = assertThrows(IndexOutOfBoundsException.class, () -> selection.setBeginIndex(-2));
+        assertEquals("beginIndex is out of bounds", t.getMessage());
+        assertDoesNotThrow(() -> {
+            selection.setBeginIndex(1);
+        });
+    }
+
+    @Test
+    void endIndexMustNotBeLowerThanBeginIndex() {
+        Selection selection = engine.getSelection();
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            selection.setBeginIndex(2);
+            selection.setEndIndex(1);
+        });
     }
 }
