@@ -1,6 +1,19 @@
-package fr.istic.aco.editor;
+package fr.istic.aco.editor.receiver.impl;
+
+import fr.istic.aco.editor.receiver.contract.Engine;
+import fr.istic.aco.editor.receiver.contract.Selection;
 
 public class EngineImpl implements Engine {
+    private final StringBuffer buffer;
+    private final Selection selection;
+    private String clipboardContent;
+
+    public EngineImpl() {
+        this.buffer = new StringBuffer();
+        this.selection = new SelectionImpl(buffer);
+        this.clipboardContent = "";
+    }
+
     /**
      * Provides access to the selection control object
      *
@@ -8,8 +21,7 @@ public class EngineImpl implements Engine {
      */
     @Override
     public Selection getSelection() {
-        // TODO
-        return null;
+        return this.selection;
     }
 
     /**
@@ -19,8 +31,7 @@ public class EngineImpl implements Engine {
      */
     @Override
     public String getBufferContents() {
-        // TODO
-        return null;
+        return buffer.toString();
     }
 
     /**
@@ -30,8 +41,7 @@ public class EngineImpl implements Engine {
      */
     @Override
     public String getClipboardContents() {
-        // TODO
-        return null;
+        return clipboardContent;
     }
 
     /**
@@ -41,7 +51,9 @@ public class EngineImpl implements Engine {
      */
     @Override
     public void cutSelectedText() {
-        // TODO
+        //recupere le texte entre le debut et la fin de la selection à partir du buffer et le supprime du buffer
+       clipboardContent = buffer.toString().substring(selection.getBeginIndex(), selection.getEndIndex());
+       buffer.delete(selection.getBeginIndex(), selection.getEndIndex());
     }
 
     /**
@@ -51,7 +63,7 @@ public class EngineImpl implements Engine {
      */
     @Override
     public void copySelectedText() {
-        // TODO
+        clipboardContent = buffer.toString().substring(selection.getBeginIndex(), selection.getEndIndex());
     }
 
     /**
@@ -60,7 +72,9 @@ public class EngineImpl implements Engine {
      */
     @Override
     public void pasteClipboard() {
-        // TODO
+        if (!clipboardContent.equals("")) {
+            insert(clipboardContent);
+        }
     }
 
     /**
@@ -70,7 +84,11 @@ public class EngineImpl implements Engine {
      */
     @Override
     public void insert(String s) {
-
+        //on insère le texte à partir du début de la sélection
+        buffer.insert(selection.getBeginIndex(), s);
+        //on deplace le curseur
+        selection.setBeginIndex(selection.getBeginIndex() + s.length());
+        selection.setEndIndex(selection.getEndIndex() + s.length());
     }
 
     /**
@@ -78,6 +96,6 @@ public class EngineImpl implements Engine {
      */
     @Override
     public void delete() {
-
+        buffer.delete(selection.getBufferBeginIndex(), selection.getBufferEndIndex());
     }
 }

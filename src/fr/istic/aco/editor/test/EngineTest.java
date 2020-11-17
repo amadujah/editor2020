@@ -1,5 +1,8 @@
-package fr.istic.aco.editor;
+package fr.istic.aco.editor.test;
 
+import fr.istic.aco.editor.receiver.contract.Engine;
+import fr.istic.aco.editor.receiver.contract.Selection;
+import fr.istic.aco.editor.receiver.impl.EngineImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +43,7 @@ class EngineTest {
         engine.insert(word);
         Selection selection = engine.getSelection();
         selection.setBeginIndex(0);
-        selection.setEndIndex(5);
+        selection.setEndIndex(4);
         engine.copySelectedText();
         assertEquals("Copy", engine.getClipboardContents());
         assertNotEquals("this", engine.getClipboardContents());
@@ -53,12 +56,12 @@ class EngineTest {
         var bufferInitialLength = word.length();
         Selection selection = engine.getSelection();
         selection.setBeginIndex(0);
-        selection.setEndIndex(5);
+        selection.setEndIndex(4);
         engine.cutSelectedText();
         assertEquals("Copy", engine.getClipboardContents());
         assertEquals(" this to clip", engine.getBufferContents());
         assertEquals(engine.getBufferContents().length(), bufferInitialLength - 4);
-        selection.setEndIndex(word.length());
+        selection.setEndIndex(engine.getBufferContents().length());
         engine.cutSelectedText();
         assertEquals("", engine.getBufferContents());
     }
@@ -69,17 +72,32 @@ class EngineTest {
         engine.insert(word);
         Selection selection = engine.getSelection();
         selection.setBeginIndex(0);
-        selection.setEndIndex(5);
+        selection.setEndIndex(4);
         engine.copySelectedText();
         assertEquals("Copy", engine.getClipboardContents());
         assertEquals(word, engine.getBufferContents());
-        selection.setEndIndex(word.length());
+        selection.setEndIndex(engine.getBufferContents().length());
         engine.cutSelectedText();
         assertEquals("", engine.getBufferContents());
     }
 
     @Test
     void pasteClipboard() {
-        todo();
+        var word = "Copy this to clip";
+        engine.insert(word);
+        Selection selection = engine.getSelection();
+        selection.setBeginIndex(0);
+        selection.setEndIndex(4);
+        engine.copySelectedText();
+        selection.setBeginIndex(selection.getBufferEndIndex());
+        selection.setEndIndex(selection.getBufferEndIndex());
+        engine.pasteClipboard();
+
+        assertEquals(word +"Copy", engine.getBufferContents());
+    }
+
+    @Test
+    void insert() {
+
     }
 }
