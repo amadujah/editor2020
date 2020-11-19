@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class InvokerImpl implements Invoker {
     private final HashMap<String, Command> commands = new HashMap<>();
@@ -15,6 +16,8 @@ public class InvokerImpl implements Invoker {
     private InputStream inputStream;
     private BufferedReader bufferedReader;
     private String text;
+    private int beginIndex;
+    private int endIndex;
 
     @Override
     public void runInvokerLoop() {
@@ -25,7 +28,7 @@ public class InvokerImpl implements Invoker {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if(userInput == null) {
+            if (userInput == null) {
                 stopLoop = true;
                 break;
             }
@@ -57,12 +60,12 @@ public class InvokerImpl implements Invoker {
         if ((keyword == null) || (cmd == null)) {
             throw new IllegalArgumentException("null parameter");
         }
-        commands.put(keyword,cmd);
+        commands.put(keyword, cmd);
     }
 
     @Override
     public void setReadStream(InputStream inputStream) {
-        if(inputStream == null) {
+        if (inputStream == null) {
             throw new IllegalArgumentException("null inputStream");
         }
         this.inputStream = inputStream;
@@ -71,11 +74,54 @@ public class InvokerImpl implements Invoker {
 
     @Override
     public String getText() {
-        return this.text;
+        String userInput = null;
+        try {
+            userInput = readUserInput();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return userInput;
     }
 
     @Override
     public void setText(String text) {
         this.text = text;
+
+    }
+
+    @Override
+    public int getBeginIndex() {
+        return getUserInput();
+    }
+
+    @Override
+    public int getEndIndex() {
+        return getUserInput();
+    }
+
+    private int getUserInput() {
+        String userInput = null;
+        try {
+            userInput = readUserInput();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int userInputInteger = -1;
+        try {
+            userInputInteger = Integer.parseInt(Objects.requireNonNull(userInput));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return userInputInteger;
+    }
+
+    public void setBeginIndex(int beginIndex) {
+        this.beginIndex = beginIndex;
+    }
+
+    public void setEndIndex(int endIndex) {
+        this.endIndex = endIndex;
     }
 }

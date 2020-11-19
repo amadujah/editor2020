@@ -16,5 +16,6 @@ public class InsertCommand implements Command {
     @Override
     public void execute() {
         receiver.insert(invoker.getText());
+        System.out.println(receiver.getBufferContents());
     }
 }

@@ -13,5 +13,6 @@ public class PasteCommand implements Command {
     @Override
     public void execute() {
         receiver.pasteClipboard();
+        System.out.println(receiver.getBufferContents());
     }
 }

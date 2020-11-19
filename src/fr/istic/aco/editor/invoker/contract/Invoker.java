@@ -35,4 +35,8 @@ public interface Invoker {
 
     String getText();
     void setText(String text);
+
+    int getBeginIndex();
+
+    int getEndIndex();
 }

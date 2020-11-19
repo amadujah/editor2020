@@ -84,7 +84,7 @@ public class EngineImpl implements Engine {
      */
     @Override
     public void insert(String s) {
-        //Supprimer la suppression
+        //Supprimer la sélection
         delete();
         //on insère le texte à partir du début de la sélection
         buffer.insert(selection.getBeginIndex(), s);
@@ -99,8 +99,7 @@ public class EngineImpl implements Engine {
     @Override
     public void delete() {
         buffer.delete(selection.getBeginIndex(), selection.getEndIndex());
-
         selection.setBeginIndex(selection.getBeginIndex());
-        selection.setEndIndex(selection.getEndIndex());
+        selection.setEndIndex(selection.getBeginIndex());
     }
 }

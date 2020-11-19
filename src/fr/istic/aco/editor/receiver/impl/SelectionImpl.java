@@ -35,7 +35,7 @@ public class SelectionImpl implements Selection {
 
     @Override
     public void setBeginIndex(int beginIndex) {
-        if (beginIndex < 0)
+        if (beginIndex < getBufferBeginIndex() || beginIndex > getBufferEndIndex())
             throw new IndexOutOfBoundsException("beginIndex is out of bounds");
 
         this.beginIndex = beginIndex;
@@ -43,7 +43,7 @@ public class SelectionImpl implements Selection {
 
     @Override
     public void setEndIndex(int endIndex) {
-        if (endIndex < getBeginIndex())
+        if (endIndex < getBeginIndex() || endIndex > getBufferEndIndex())
             throw new IndexOutOfBoundsException("endIndex is out of bounds");
 
         this.endIndex = endIndex;

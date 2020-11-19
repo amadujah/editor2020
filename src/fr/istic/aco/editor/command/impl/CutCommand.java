@@ -13,5 +13,7 @@ public class CutCommand implements Command {
     @Override
     public void execute() {
         receiver.cutSelectedText();
+        System.out.println("Buffer " + receiver.getBufferContents());
+        System.out.println("Clipboard " + receiver.getClipboardContents());
     }
 }
