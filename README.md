@@ -1,2 +1,2 @@
-"Editor project" 
-"test Romaric"
+# Editor project
+## Amadou & Romaric
