@@ -13,11 +13,7 @@ import java.util.Objects;
 public class InvokerImpl implements Invoker {
     private final HashMap<String, Command> commands = new HashMap<>();
     private boolean stopLoop = false;
-    private InputStream inputStream;
     private BufferedReader bufferedReader;
-    private String text;
-    private int beginIndex;
-    private int endIndex;
 
     @Override
     public void runInvokerLoop() {
@@ -68,7 +64,6 @@ public class InvokerImpl implements Invoker {
         if (inputStream == null) {
             throw new IllegalArgumentException("null inputStream");
         }
-        this.inputStream = inputStream;
         this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
     }
 
@@ -85,7 +80,6 @@ public class InvokerImpl implements Invoker {
 
     @Override
     public void setText(String text) {
-        this.text = text;
 
     }
 
@@ -115,13 +109,5 @@ public class InvokerImpl implements Invoker {
         }
 
         return userInputInteger;
-    }
-
-    public void setBeginIndex(int beginIndex) {
-        this.beginIndex = beginIndex;
-    }
-
-    public void setEndIndex(int endIndex) {
-        this.endIndex = endIndex;
     }
 }
