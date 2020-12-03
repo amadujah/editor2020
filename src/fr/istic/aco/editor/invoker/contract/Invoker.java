@@ -34,7 +34,6 @@ public interface Invoker {
     public void addCommand(String keyword, Command cmd);
 
     String getText();
-    void setText(String text);
 
     int getBeginIndex();
 

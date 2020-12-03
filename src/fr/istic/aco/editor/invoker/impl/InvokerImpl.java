@@ -79,11 +79,6 @@ public class InvokerImpl implements Invoker {
     }
 
     @Override
-    public void setText(String text) {
-
-    }
-
-    @Override
     public int getBeginIndex() {
         return getUserInput();
     }

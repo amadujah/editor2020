@@ -2,24 +2,24 @@ package fr.istic.aco.editor.command.impl;
 
 import fr.istic.aco.editor.command.contract.Command;
 import fr.istic.aco.editor.memento.contract.Memento;
-import fr.istic.aco.editor.receiver.contract.Engine;
 import fr.istic.aco.editor.receiver.contract.Recorder;
 
-public class CopyCommand implements Command {
-    private final Engine receiver;
-    private final Recorder recorder;
+/**
+ * Concrete command of replay action
+ */
+public class ReplayCommand implements Command {
+    private final Recorder receiver;
 
-    public CopyCommand(Engine receiver, Recorder recorder) {
+    public ReplayCommand(Recorder receiver) {
         this.receiver = receiver;
-        this.recorder = recorder;
     }
 
-
+    /**
+     * Replay all the recorded commands
+     */
     @Override
     public void execute() {
-        receiver.copySelectedText();
-        recorder.save(this);
-        //System.out.println(receiver.getClipboardContents());
+        this.receiver.replay();
     }
 
     @Override

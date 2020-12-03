@@ -31,11 +31,11 @@ public class EditorConfigurator {
     }
 
     private void configureCommands() {
-        invoker.addCommand("Copy", new CopyCommand(receiver));
-        invoker.addCommand("Paste", new PasteCommand(receiver));
+        invoker.addCommand("Copy", new CopyCommand(receiver, recorder));
+        invoker.addCommand("Paste", new PasteCommand(receiver, recorder));
         invoker.addCommand("Cut", new CutCommand(receiver, recorder));
-        invoker.addCommand("Delete", new DeleteCommand(receiver));
-        invoker.addCommand("Insert", new InsertCommand(receiver, invoker));
-        invoker.addCommand("Select", new SelectCommand(receiver, invoker));
+        invoker.addCommand("Delete", new DeleteCommand(receiver, recorder));
+        invoker.addCommand("Insert", new InsertCommand(receiver, invoker, recorder));
+        invoker.addCommand("Select", new SelectCommand(receiver, invoker, recorder));
     }
 }

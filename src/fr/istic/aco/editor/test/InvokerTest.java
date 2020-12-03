@@ -8,7 +8,6 @@ import org.mockito.Mockito;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.logging.Logger;
 
 public class InvokerTest {
 
@@ -25,17 +24,6 @@ public class InvokerTest {
         invoker.setReadStream(mockReadStream);
 
         invoker.addCommand("Insert", mockCmd);
-
-        // Install a command to stop the invoker's loop
-        {
-            Command copyCommand;
-
-            copyCommand = () -> {
-                invoker.stopLoop();
-                Logger.getGlobal().info("Invoker stopped by test case");
-            };
-            invoker.addCommand("Copy", copyCommand);
-        }
 
         invoker.runInvokerLoop();
         Mockito.verify(mockCmd).execute();
