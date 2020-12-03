@@ -5,8 +5,10 @@ import fr.istic.aco.editor.command.impl.*;
 import fr.istic.aco.editor.invoker.contract.Invoker;
 import fr.istic.aco.editor.invoker.impl.InvokerImpl;
 import fr.istic.aco.editor.receiver.contract.Engine;
+import fr.istic.aco.editor.receiver.contract.Recorder;
 import fr.istic.aco.editor.receiver.contract.Selection;
 import fr.istic.aco.editor.receiver.impl.EngineImpl;
+import fr.istic.aco.editor.receiver.impl.RecorderImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,11 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CommandTest {
     private Engine engine;
     private Invoker invoker;
+    private Recorder recorder;
 
     @BeforeEach
     void setup() {
         engine = new EngineImpl();
         invoker = new InvokerImpl();
+        recorder = new RecorderImpl();
     }
     @Test
     void copyCommand() {
@@ -32,7 +36,7 @@ public class CommandTest {
         Selection selection = engine.getSelection();
         selection.setBeginIndex(0);
         selection.setEndIndex(5);
-        Command copy = new CopyCommand(engine);
+        Command copy = new CopyCommand(engine, recorder);
         copy.execute();
 
         assertEquals(engine.getClipboardContents(), "Hello");
@@ -44,7 +48,7 @@ public class CommandTest {
         Selection selection = engine.getSelection();
         selection.setBeginIndex(0);
         selection.setEndIndex(5);
-        Command cut = new CutCommand(engine);
+        Command cut = new CutCommand(engine, recorder);
         cut.execute();
 
         assertEquals(engine.getClipboardContents(), "Hello");
@@ -58,12 +62,12 @@ public class CommandTest {
         Selection selection = engine.getSelection();
         selection.setBeginIndex(0);
         selection.setEndIndex(5);
-        Command cut = new CutCommand(engine);
+        Command cut = new CutCommand(engine, recorder);
         cut.execute();
 
         selection.setBeginIndex(selection.getBufferEndIndex());
         selection.setEndIndex(selection.getBufferEndIndex());
-        Command paste = new PasteCommand(engine);
+        Command paste = new PasteCommand(engine, recorder);
 
         paste.execute();
 
@@ -75,7 +79,7 @@ public class CommandTest {
         String mockInput = "Salut";
         InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
         invoker.setReadStream(mockReadStream);
-        Command insert = new InsertCommand(engine, invoker);
+        Command insert = new InsertCommand(engine, invoker, recorder);
         insert.execute();
 
         assertEquals(engine.getBufferContents(), mockInput);
@@ -88,10 +92,10 @@ public class CommandTest {
         String mockInput = "0" + System.lineSeparator() + "5";
         InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
         invoker.setReadStream(mockReadStream);
-        Command selection = new SelectCommand(engine, invoker);
+        Command selection = new SelectCommand(engine, invoker, recorder);
         selection.execute();
 
-        Command copy = new CopyCommand(engine);
+        Command copy = new CopyCommand(engine, recorder);
         copy.execute();
 
         assertEquals(engine.getClipboardContents(), "Salut");
@@ -108,10 +112,10 @@ public class CommandTest {
         String mockInput = "5" + System.lineSeparator() + content.length();
         InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
         invoker.setReadStream(mockReadStream);
-        Command selection = new SelectCommand(engine, invoker);
+        Command selection = new SelectCommand(engine, invoker, recorder);
         selection.execute();
 
-        Command delete = new DeleteCommand(engine);
+        Command delete = new DeleteCommand(engine, recorder);
         delete.execute();
 
         assertEquals(engine.getBufferContents(), "Salut");
@@ -123,7 +127,7 @@ public class CommandTest {
         String content = "Salut tout le monde";
         engine.insert(content);
 
-        Command delete = new DeleteCommand(engine);
+        Command delete = new DeleteCommand(engine, recorder);
         delete.execute();
 
         assertEquals(engine.getBufferContents(), content);
@@ -132,18 +136,18 @@ public class CommandTest {
     @DisplayName("Null receiver on command throws NullPointerException")
     @Test
     void nullReceiverOnCommand() {
-        assertThrows(NullPointerException.class, () -> new CopyCommand(null));
+        assertThrows(NullPointerException.class, () -> new CopyCommand(null, recorder));
     }
 
     @DisplayName("Null invoker on command throws NullPointerException")
     @Test
     void nullInvokerOnCommand() {
-        assertThrows(NullPointerException.class, () -> new InsertCommand(engine, null));
+        assertThrows(NullPointerException.class, () -> new InsertCommand(engine, null, recorder));
     }
 
     @DisplayName("Null invoker and receiver on command throws NullPointerException")
     @Test
     void nullInvokerAndReceiverOnCommand() {
-        assertThrows(NullPointerException.class, () -> new InsertCommand(null, null));
+        assertThrows(NullPointerException.class, () -> new InsertCommand(null, null, recorder));
     }
 }
