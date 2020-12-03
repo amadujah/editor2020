@@ -210,19 +210,25 @@ class EngineTest {
         selection.setBeginIndex(0);
         selection.setEndIndex(selection.getBufferEndIndex());
         engine.delete();
-        assertEquals(engine.getBufferContents().length(), 0);
+        assertEquals(engine.getBufferContents().length(), 0, "The buffer content must be empty");
     }
 
     @Test
     @DisplayName("Begin and end must be 0 after initialization")
     void beginAndEndMustBeZeroAfterInitialization() {
-        todo();
+        Selection selection = engine.getSelection();
+        assertEquals(0, selection.getBeginIndex());
+        assertEquals(0, selection.getEndIndex());
     }
 
     @Test
-    @DisplayName("Buffer length must equal to ")
+    @DisplayName("Buffer length must equal to buffer endIndex")
     void bufferLengthMustBeEqualBufferEndIndex() {
-        todo();
+        String word = "Hello";
+        engine.insert(word);
+        Selection selection = engine.getSelection();
+
+        assertEquals(engine.getBufferContents().length(),selection.getBufferEndIndex());
     }
 
     @Test
