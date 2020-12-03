@@ -7,12 +7,17 @@ import fr.istic.aco.editor.receiver.contract.Engine;
 import fr.istic.aco.editor.receiver.contract.Recorder;
 import fr.istic.aco.editor.receiver.contract.Selection;
 
+import java.util.Objects;
+
 public class SelectCommand implements Command {
     private final Engine receiver;
     private final Invoker invoker;
     private final Recorder recorder;
 
     public SelectCommand(Engine receiver, Invoker invoker, Recorder recorder) {
+        Objects.requireNonNull(receiver);
+        Objects.requireNonNull(invoker);
+        Objects.requireNonNull(recorder);
         this.receiver = receiver;
         this.invoker = invoker;
         this.recorder = recorder;

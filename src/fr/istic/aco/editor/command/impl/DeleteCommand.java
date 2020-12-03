@@ -10,11 +10,15 @@ import fr.istic.aco.editor.receiver.contract.Recorder;
  *
  * @see Command
  */
+import java.util.Objects;
+
 public class DeleteCommand implements Command {
     private final Engine receiver;
     private final Recorder recorder;
 
     public DeleteCommand(Engine receiver, Recorder recorder) {
+        Objects.requireNonNull(receiver);
+        Objects.requireNonNull(recorder);
         this.receiver = receiver;
         this.recorder = recorder;
     }
