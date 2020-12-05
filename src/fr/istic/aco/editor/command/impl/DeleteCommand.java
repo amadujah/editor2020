@@ -5,13 +5,13 @@ import fr.istic.aco.editor.memento.contract.Memento;
 import fr.istic.aco.editor.receiver.contract.Engine;
 import fr.istic.aco.editor.receiver.contract.Recorder;
 
+import java.util.Objects;
+
 /**
- * Delete action concrete command
+ * Concrete command of delete action
  *
  * @see Command
  */
-import java.util.Objects;
-
 public class DeleteCommand implements Command {
     private final Engine receiver;
     private final Recorder recorder;
@@ -29,8 +29,14 @@ public class DeleteCommand implements Command {
      */
     @Override
     public void execute() {
-        receiver.delete();
-        recorder.save(this);
+        if (!recorder.isReplaying()) {
+            receiver.delete();
+            if (recorder.isRecording()) {
+                recorder.save(this);
+            }
+        } else {
+            receiver.delete();
+        }
 
         //System.out.println(receiver.getBufferContents());
     }

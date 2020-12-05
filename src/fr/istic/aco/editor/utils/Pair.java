@@ -1,5 +1,10 @@
 package fr.istic.aco.editor.utils;
 
+/**
+ * Utility class
+ * @param <K> represents the command
+ * @param <V> represents the memento
+ */
 public class Pair<K, V> {
     private K first;       // first field of a Pair
     private V second;      // second field of a Pair
@@ -12,6 +17,10 @@ public class Pair<K, V> {
 
     public V getValue() {
         return second;
+    }
+
+    public K getKey() {
+        return first;
     }
 
     public void setValue(K key, V value) {

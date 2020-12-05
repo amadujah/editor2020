@@ -3,7 +3,7 @@ package fr.istic.aco.editor.receiver.contract;
 /**
  * Provides access to selection control operations
  *
- * @author plouzeau
+ * @author Amadou & Romaric
  * @version 1.0
  */
 public interface Selection {

@@ -20,8 +20,12 @@ public class PasteCommand implements Command {
 
     @Override
     public void execute() {
-        receiver.pasteClipboard();
-        recorder.save(this);
+        if (!recorder.isReplaying()) {
+            receiver.pasteClipboard();
+            if (recorder.isRecording()) {
+                recorder.save(this);
+            }
+        }
         System.out.println(receiver.getBufferContents());
     }
 

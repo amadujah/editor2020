@@ -12,7 +12,7 @@ public class InsertCommand implements Command {
     private final Engine receiver;
     private final Invoker invoker;
     private final Recorder recorder;
-    private Memento memento;
+    private String insertText;
 
     public InsertCommand(Engine receiver, Invoker invoker, Recorder recorder) {
         Objects.requireNonNull(receiver);
@@ -25,22 +25,32 @@ public class InsertCommand implements Command {
 
     @Override
     public void execute() {
-        receiver.insert(invoker.getText());
-        recorder.save(this);
-        new InsertMemento().setText(invoker.getText());
+        //Insert from UI
+        if (!recorder.isReplaying()) {
+            insertText = invoker.getText();
+            receiver.insert(insertText);
+            if (recorder.isRecording()) {
+                recorder.save(this);
+            }
+        } else {
+            //Insert from memento
+            receiver.insert(insertText);
+        }
 
-        //System.out.println(receiver.getBufferContents());
+        System.out.println(receiver.getBufferContents());
     }
 
     public Memento getMemento() {
+        InsertMemento memento = new InsertMemento();
+        memento.setText(insertText);
         return memento;
     }
 
     public void setMemento(Memento memento) {
-        this.memento = memento;
+        insertText = ((InsertMemento) memento).getText();
     }
 
-    private static class InsertMemento {
+    private static class InsertMemento implements Memento {
         private String text;
 
         public String getText() {

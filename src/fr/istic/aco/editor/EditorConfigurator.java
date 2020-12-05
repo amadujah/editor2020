@@ -16,8 +16,14 @@ public class EditorConfigurator {
     public static void main(String[] lineArgs) {
 
         EditorConfigurator client = new EditorConfigurator();
+        System.out.println("Tapez les commandes suivantes : ");
+        System.out.println("Insert pour insérer du texte");
+        System.out.println("Copy pour copier le texte selectionné");
+        System.out.println("Cut pour couper le texte selectionné");
+        System.out.println("Paste pour coller le contenu du texte");
+        System.out.println("Select pour sélectionner un contenu");
+        System.out.println("Replay pour rejouer les commandes enregistrées");
         client.run();
-
     }
 
     private void run() {
@@ -25,7 +31,6 @@ public class EditorConfigurator {
         receiver = new EngineImpl();
         recorder = new RecorderImpl();
         invoker.setReadStream(System.in);
-        //invoker.setText("");
         configureCommands();
         invoker.runInvokerLoop();
     }
@@ -37,5 +42,8 @@ public class EditorConfigurator {
         invoker.addCommand("Delete", new DeleteCommand(receiver, recorder));
         invoker.addCommand("Insert", new InsertCommand(receiver, invoker, recorder));
         invoker.addCommand("Select", new SelectCommand(receiver, invoker, recorder));
+        invoker.addCommand("Start", new StartCommand(recorder));
+        invoker.addCommand("Stop", new StopCommand(recorder));
+        invoker.addCommand("Replay", new ReplayCommand(recorder));
     }
 }

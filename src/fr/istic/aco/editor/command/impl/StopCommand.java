@@ -6,23 +6,17 @@ import fr.istic.aco.editor.receiver.contract.Recorder;
 
 import java.util.Objects;
 
-/**
- * Concrete command of replay action
- */
-public class ReplayCommand implements Command {
+public class StopCommand implements Command {
     private final Recorder recorder;
 
-    public ReplayCommand(Recorder recorder) {
-        Objects.requireNonNull(recorder, "Recorder cannot be null");
+    public StopCommand(Recorder recorder) {
+        Objects.requireNonNull(recorder);
         this.recorder = recorder;
     }
 
-    /**
-     * Replay all the recorded commands
-     */
     @Override
     public void execute() {
-        this.recorder.replay();
+        recorder.stop();
     }
 
     @Override

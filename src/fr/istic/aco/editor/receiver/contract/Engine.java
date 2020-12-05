@@ -3,7 +3,7 @@ package fr.istic.aco.editor.receiver.contract;
 /**
  * Main API for the text editing engine
  *
- * @author plouzeau
+ * @author Amadou & Romaric
  * @version 1.0
  */
 

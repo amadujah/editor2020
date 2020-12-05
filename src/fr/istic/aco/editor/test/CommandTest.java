@@ -150,4 +150,34 @@ public class CommandTest {
     void nullInvokerAndReceiverOnCommand() {
         assertThrows(NullPointerException.class, () -> new InsertCommand(null, null, recorder));
     }
+
+    @DisplayName("")
+    @Test
+    void replayCommand() {
+        String mockInput = "Salut à tous";
+        //start recording
+        new StartCommand(recorder).execute();
+        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
+        invoker.setReadStream(mockReadStream);
+        Command insertCommand = new InsertCommand(engine, invoker, recorder);
+        insertCommand.execute();
+        //stop recording
+        new StopCommand(recorder).execute();
+
+        //Delete buffer content
+        String selectIndex = 0 + System.lineSeparator() + mockInput.length();
+        mockReadStream = new ByteArrayInputStream(selectIndex.getBytes());
+        invoker.setReadStream(mockReadStream);
+        Command selectCommand = new SelectCommand(engine, invoker, recorder);
+        selectCommand.execute();
+
+        Command deleteCommand = new DeleteCommand(engine, recorder);
+        deleteCommand.execute();
+
+        //Replay insert command
+        Command replayCommand = new ReplayCommand(recorder);
+        replayCommand.execute();
+
+        assertEquals(mockInput, engine.getBufferContents());
+    }
 }

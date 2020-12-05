@@ -7,6 +7,9 @@ import fr.istic.aco.editor.receiver.contract.Recorder;
 
 import java.util.Objects;
 
+/**
+ * Concrete command of cut action
+ */
 public class CutCommand implements Command {
     private final Engine receiver;
     private final Recorder recorder;
@@ -20,9 +23,14 @@ public class CutCommand implements Command {
 
     @Override
     public void execute() {
-        receiver.cutSelectedText();
-        recorder.save(this);
-
+        if (!recorder.isReplaying()) {
+            receiver.cutSelectedText();
+            if (recorder.isRecording()) {
+                recorder.save(this);
+            }
+        } else {
+            receiver.cutSelectedText();
+        }
 /*        System.out.println("Buffer " + receiver.getBufferContents());
         System.out.println("Clipboard " + receiver.getClipboardContents());*/
     }

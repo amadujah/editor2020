@@ -10,28 +10,56 @@ import java.util.List;
 
 public class RecorderImpl implements Recorder {
     private final List<Pair<Command, Memento>> pairs;
+    private boolean isReplaying = false;
+    private boolean isRecording = false;
 
     public RecorderImpl() {
         pairs = new ArrayList<>();
     }
 
+    /**
+     * Save the command for replaying it after
+     * @param command
+     */
     @Override
     public void save(Command command) {
-        pairs.add(Pair.of(command, command.getMemento()));
+        Memento memento = command.getMemento();
+        pairs.add(Pair.of(command, memento));
     }
 
     @Override
     public void start() {
-
+        isRecording = true;
     }
+
 
     @Override
     public void stop() {
+        isRecording = false;
+    }
 
+    /**
+     * Browse all the recorded commands and replay them
+     */
+    @Override
+    public void replay() {
+        isReplaying = true;
+        for (Pair<Command, Memento> pair : pairs) {
+            Command command = pair.getKey();
+            Memento memento = pair.getValue();
+            command.setMemento(memento);
+            command.execute();
+        }
+        isReplaying = false;
     }
 
     @Override
-    public void replay() {
+    public boolean isReplaying() {
+        return isReplaying;
+    }
 
+    @Override
+    public boolean isRecording() {
+        return isRecording;
     }
 }
