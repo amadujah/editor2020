@@ -38,7 +38,7 @@ public class DeleteCommand implements Command {
             receiver.delete();
         }
 
-        //System.out.println(receiver.getBufferContents());
+        System.out.println("Contenu du buffer : " + receiver.getBufferContents());
     }
 
     @Override

@@ -31,8 +31,9 @@ public class CutCommand implements Command {
         } else {
             receiver.cutSelectedText();
         }
-/*        System.out.println("Buffer " + receiver.getBufferContents());
-        System.out.println("Clipboard " + receiver.getClipboardContents());*/
+
+        System.out.println("Contenu du presse papier : " + receiver.getClipboardContents());
+        System.out.println("Contenu du buffer : " + receiver.getBufferContents());
     }
 
     @Override

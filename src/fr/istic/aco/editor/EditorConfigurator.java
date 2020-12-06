@@ -14,15 +14,16 @@ public class EditorConfigurator {
     private Recorder recorder;
 
     public static void main(String[] lineArgs) {
-
         EditorConfigurator client = new EditorConfigurator();
-        System.out.println("Tapez les commandes suivantes : ");
+        System.out.println("*** Tapez les commandes suivantes : ***");
         System.out.println("Insert pour insérer du texte");
+        System.out.println("Select pour sélectionner un contenu");
         System.out.println("Copy pour copier le texte selectionné");
         System.out.println("Cut pour couper le texte selectionné");
         System.out.println("Paste pour coller le contenu du texte");
-        System.out.println("Select pour sélectionner un contenu");
-        System.out.println("Replay pour rejouer les commandes enregistrées");
+        System.out.println("Start pour démarrer l'enregistrement");
+        System.out.println("Stop pour arrêter l'enregistrement");
+        System.out.println("Replay pour rejouer les actions enregistrées");
         client.run();
     }
 

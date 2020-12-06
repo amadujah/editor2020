@@ -16,7 +16,9 @@ public class StopCommand implements Command {
 
     @Override
     public void execute() {
-        recorder.stop();
+        if (recorder.isRecording()) {
+            recorder.stop();
+        }
     }
 
     @Override

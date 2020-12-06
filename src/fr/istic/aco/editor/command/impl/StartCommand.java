@@ -16,7 +16,9 @@ public class StartCommand implements Command {
 
     @Override
     public void execute() {
-        recorder.start();
+        if (!recorder.isRecording()) {
+            recorder.start();
+        }
     }
 
     @Override

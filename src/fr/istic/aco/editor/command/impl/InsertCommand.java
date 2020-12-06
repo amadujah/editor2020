@@ -37,7 +37,7 @@ public class InsertCommand implements Command {
             receiver.insert(insertText);
         }
 
-        System.out.println(receiver.getBufferContents());
+        System.out.println("Contenu du buffer : " + receiver.getBufferContents());
     }
 
     public Memento getMemento() {

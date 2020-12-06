@@ -25,8 +25,11 @@ public class PasteCommand implements Command {
             if (recorder.isRecording()) {
                 recorder.save(this);
             }
+        } else {
+            receiver.pasteClipboard();
         }
-        System.out.println(receiver.getBufferContents());
+
+        System.out.println("Contenu du buffer : " + receiver.getBufferContents());
     }
 
     @Override

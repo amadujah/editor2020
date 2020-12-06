@@ -31,7 +31,8 @@ public class CopyCommand implements Command {
         } else {
             receiver.copySelectedText();
         }
-        //System.out.println(receiver.getClipboardContents());
+
+        System.out.println("Contenu du presse papier : " + receiver.getClipboardContents());
     }
 
     @Override

@@ -13,7 +13,7 @@ public interface Originator {
 
     /**
      * Restore the state
-     * @param memento the memento with state is restored
+     * @param memento the memento which state is restored
      */
     void setMemento(Memento memento);
 }

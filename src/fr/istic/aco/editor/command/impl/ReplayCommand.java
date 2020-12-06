@@ -22,7 +22,11 @@ public class ReplayCommand implements Command {
      */
     @Override
     public void execute() {
-        this.recorder.replay();
+        if (!recorder.isRecording()) {
+            this.recorder.replay();
+        } else {
+            System.out.println("Il faut arrêter l'enregistrement pour pouvoir rejouer les actions");
+        }
     }
 
     @Override
