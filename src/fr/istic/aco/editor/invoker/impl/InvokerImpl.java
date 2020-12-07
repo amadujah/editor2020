@@ -28,7 +28,7 @@ public class InvokerImpl implements Invoker {
                 stopLoop = true;
                 break;
             }
-            Command cmdToExecute = commands.get(userInput);
+            Command cmdToExecute = commands.get(userInput.toLowerCase());
             if (cmdToExecute != null) {
                 cmdToExecute.execute();
             }

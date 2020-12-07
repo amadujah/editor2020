@@ -6,6 +6,7 @@ import fr.istic.aco.editor.receiver.contract.Engine;
 import fr.istic.aco.editor.invoker.contract.Invoker;
 import fr.istic.aco.editor.receiver.contract.Recorder;
 
+import java.io.PrintStream;
 import java.util.Objects;
 
 public class InsertCommand implements Command {
@@ -13,8 +14,10 @@ public class InsertCommand implements Command {
     private final Invoker invoker;
     private final Recorder recorder;
     private String insertText;
+    private PrintStream output;
 
-    public InsertCommand(Engine receiver, Invoker invoker, Recorder recorder) {
+    public InsertCommand(Engine receiver, Invoker invoker, Recorder recorder, PrintStream output) {
+        this.output = output;
         Objects.requireNonNull(receiver);
         Objects.requireNonNull(invoker);
         Objects.requireNonNull(recorder);
@@ -37,7 +40,7 @@ public class InsertCommand implements Command {
             receiver.insert(insertText);
         }
 
-        System.out.println("Contenu du buffer : " + receiver.getBufferContents());
+        output.println("Contenu du buffer : " + receiver.getBufferContents());
     }
 
     public Memento getMemento() {

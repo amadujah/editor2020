@@ -19,7 +19,7 @@ public class RecorderImpl implements Recorder {
 
     /**
      * Save the command for replaying it after
-     * @param command
+     * @param command to save
      */
     @Override
     public void save(Command command) {
@@ -36,6 +36,7 @@ public class RecorderImpl implements Recorder {
     @Override
     public void stop() {
         isRecording = false;
+
     }
 
     /**

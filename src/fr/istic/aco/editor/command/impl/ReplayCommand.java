@@ -4,6 +4,7 @@ import fr.istic.aco.editor.command.contract.Command;
 import fr.istic.aco.editor.memento.contract.Memento;
 import fr.istic.aco.editor.receiver.contract.Recorder;
 
+import java.io.PrintStream;
 import java.util.Objects;
 
 /**
@@ -11,8 +12,10 @@ import java.util.Objects;
  */
 public class ReplayCommand implements Command {
     private final Recorder recorder;
+    private final PrintStream output;
 
-    public ReplayCommand(Recorder recorder) {
+    public ReplayCommand(Recorder recorder, PrintStream output) {
+        this.output = output;
         Objects.requireNonNull(recorder, "Recorder cannot be null");
         this.recorder = recorder;
     }
@@ -25,7 +28,7 @@ public class ReplayCommand implements Command {
         if (!recorder.isRecording()) {
             this.recorder.replay();
         } else {
-            System.out.println("Il faut arrêter l'enregistrement pour pouvoir rejouer les actions");
+            output.println("Il faut arrêter l'enregistrement pour pouvoir rejouer les actions");
         }
     }
 

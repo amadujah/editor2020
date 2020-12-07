@@ -5,13 +5,16 @@ import fr.istic.aco.editor.memento.contract.Memento;
 import fr.istic.aco.editor.receiver.contract.Engine;
 import fr.istic.aco.editor.receiver.contract.Recorder;
 
+import java.io.PrintStream;
 import java.util.Objects;
 
 public class PasteCommand implements Command {
     private final Engine receiver;
     private final Recorder recorder;
+    private final PrintStream output;
 
-    public PasteCommand(Engine receiver, Recorder recorder) {
+    public PasteCommand(Engine receiver, Recorder recorder, PrintStream output) {
+        this.output = output;
         Objects.requireNonNull(receiver);
         Objects.requireNonNull(recorder);
         this.receiver = receiver;
@@ -29,7 +32,7 @@ public class PasteCommand implements Command {
             receiver.pasteClipboard();
         }
 
-        System.out.println("Contenu du buffer : " + receiver.getBufferContents());
+        output.println("Contenu du buffer : " + receiver.getBufferContents());
     }
 
     @Override

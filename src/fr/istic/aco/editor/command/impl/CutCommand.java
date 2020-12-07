@@ -5,6 +5,7 @@ import fr.istic.aco.editor.memento.contract.Memento;
 import fr.istic.aco.editor.receiver.contract.Engine;
 import fr.istic.aco.editor.receiver.contract.Recorder;
 
+import java.io.PrintStream;
 import java.util.Objects;
 
 /**
@@ -13,8 +14,10 @@ import java.util.Objects;
 public class CutCommand implements Command {
     private final Engine receiver;
     private final Recorder recorder;
+    private PrintStream output;
 
-    public CutCommand(Engine receiver, Recorder recorder) {
+    public CutCommand(Engine receiver, Recorder recorder, PrintStream output) {
+        this.output = output;
         Objects.requireNonNull(receiver);
         Objects.requireNonNull(recorder);
         this.receiver = receiver;
@@ -32,8 +35,8 @@ public class CutCommand implements Command {
             receiver.cutSelectedText();
         }
 
-        System.out.println("Contenu du presse papier : " + receiver.getClipboardContents());
-        System.out.println("Contenu du buffer : " + receiver.getBufferContents());
+        output.println("Contenu du presse papier : " + receiver.getClipboardContents());
+        output.println("Contenu du buffer : " + receiver.getBufferContents());
     }
 
     @Override

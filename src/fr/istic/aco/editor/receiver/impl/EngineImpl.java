@@ -52,8 +52,11 @@ public class EngineImpl implements Engine {
     @Override
     public void cutSelectedText() {
         //recupere le texte entre le debut et la fin de la selection à partir du buffer et le supprime du buffer
-       clipboardContent = buffer.toString().substring(selection.getBeginIndex(), selection.getEndIndex());
-       buffer.delete(selection.getBeginIndex(), selection.getEndIndex());
+        clipboardContent = buffer.toString().substring(selection.getBeginIndex(), selection.getEndIndex());
+        buffer.delete(selection.getBeginIndex(), selection.getEndIndex());
+
+        selection.setBeginIndex(selection.getBeginIndex());
+        selection.setEndIndex(selection.getBeginIndex());
     }
 
     /**

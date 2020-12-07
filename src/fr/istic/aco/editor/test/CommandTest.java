@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -23,12 +24,14 @@ public class CommandTest {
     private Engine engine;
     private Invoker invoker;
     private Recorder recorder;
+    private PrintStream output;
 
     @BeforeEach
     void setup() {
         engine = new EngineImpl();
         invoker = new InvokerImpl();
         recorder = new RecorderImpl();
+        output = new PrintStream(System.out);
     }
     @Test
     void copyCommand() {
@@ -36,7 +39,7 @@ public class CommandTest {
         Selection selection = engine.getSelection();
         selection.setBeginIndex(0);
         selection.setEndIndex(5);
-        Command copy = new CopyCommand(engine, recorder);
+        Command copy = new CopyCommand(engine, recorder, output);
         copy.execute();
 
         assertEquals(engine.getClipboardContents(), "Hello");
@@ -48,7 +51,7 @@ public class CommandTest {
         Selection selection = engine.getSelection();
         selection.setBeginIndex(0);
         selection.setEndIndex(5);
-        Command cut = new CutCommand(engine, recorder);
+        Command cut = new CutCommand(engine, recorder, output);
         cut.execute();
 
         assertEquals(engine.getClipboardContents(), "Hello");
@@ -62,12 +65,12 @@ public class CommandTest {
         Selection selection = engine.getSelection();
         selection.setBeginIndex(0);
         selection.setEndIndex(5);
-        Command cut = new CutCommand(engine, recorder);
+        Command cut = new CutCommand(engine, recorder, output);
         cut.execute();
 
         selection.setBeginIndex(selection.getBufferEndIndex());
         selection.setEndIndex(selection.getBufferEndIndex());
-        Command paste = new PasteCommand(engine, recorder);
+        Command paste = new PasteCommand(engine, recorder, output);
 
         paste.execute();
 
@@ -79,7 +82,7 @@ public class CommandTest {
         String mockInput = "Salut";
         InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
         invoker.setReadStream(mockReadStream);
-        Command insert = new InsertCommand(engine, invoker, recorder);
+        Command insert = new InsertCommand(engine, invoker, recorder, output);
         insert.execute();
 
         assertEquals(engine.getBufferContents(), mockInput);
@@ -92,10 +95,10 @@ public class CommandTest {
         String mockInput = "0" + System.lineSeparator() + "5";
         InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
         invoker.setReadStream(mockReadStream);
-        Command selection = new SelectCommand(engine, invoker, recorder);
+        Command selection = new SelectCommand(engine, invoker, recorder, output);
         selection.execute();
 
-        Command copy = new CopyCommand(engine, recorder);
+        Command copy = new CopyCommand(engine, recorder, output);
         copy.execute();
 
         assertEquals(engine.getClipboardContents(), "Salut");
@@ -112,10 +115,10 @@ public class CommandTest {
         String mockInput = "5" + System.lineSeparator() + content.length();
         InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
         invoker.setReadStream(mockReadStream);
-        Command selection = new SelectCommand(engine, invoker, recorder);
+        Command selection = new SelectCommand(engine, invoker, recorder, output);
         selection.execute();
 
-        Command delete = new DeleteCommand(engine, recorder);
+        Command delete = new DeleteCommand(engine, recorder, output);
         delete.execute();
 
         assertEquals(engine.getBufferContents(), "Salut");
@@ -127,7 +130,7 @@ public class CommandTest {
         String content = "Salut tout le monde";
         engine.insert(content);
 
-        Command delete = new DeleteCommand(engine, recorder);
+        Command delete = new DeleteCommand(engine, recorder, output);
         delete.execute();
 
         assertEquals(engine.getBufferContents(), content);
@@ -136,19 +139,19 @@ public class CommandTest {
     @DisplayName("Null receiver on command throws NullPointerException")
     @Test
     void nullReceiverOnCommand() {
-        assertThrows(NullPointerException.class, () -> new CopyCommand(null, recorder));
+        assertThrows(NullPointerException.class, () -> new CopyCommand(null, recorder, output));
     }
 
     @DisplayName("Null invoker on command throws NullPointerException")
     @Test
     void nullInvokerOnCommand() {
-        assertThrows(NullPointerException.class, () -> new InsertCommand(engine, null, recorder));
+        assertThrows(NullPointerException.class, () -> new InsertCommand(engine, null, recorder, output));
     }
 
     @DisplayName("Null invoker and receiver on command throws NullPointerException")
     @Test
     void nullInvokerAndReceiverOnCommand() {
-        assertThrows(NullPointerException.class, () -> new InsertCommand(null, null, recorder));
+        assertThrows(NullPointerException.class, () -> new InsertCommand(null, null, recorder, output));
     }
 
     @DisplayName("")
@@ -156,28 +159,58 @@ public class CommandTest {
     void replayCommand() {
         String mockInput = "Salut à tous";
         //start recording
-        new StartCommand(recorder).execute();
+        new StartCommand(recorder, output).execute();
         InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
         invoker.setReadStream(mockReadStream);
-        Command insertCommand = new InsertCommand(engine, invoker, recorder);
+        Command insertCommand = new InsertCommand(engine, invoker, recorder, output);
         insertCommand.execute();
         //stop recording
-        new StopCommand(recorder).execute();
+        new StopCommand(recorder, output).execute();
 
         //Delete buffer content
         String selectIndex = 0 + System.lineSeparator() + mockInput.length();
         mockReadStream = new ByteArrayInputStream(selectIndex.getBytes());
         invoker.setReadStream(mockReadStream);
-        Command selectCommand = new SelectCommand(engine, invoker, recorder);
+        Command selectCommand = new SelectCommand(engine, invoker, recorder, output);
         selectCommand.execute();
 
-        Command deleteCommand = new DeleteCommand(engine, recorder);
+        Command deleteCommand = new DeleteCommand(engine, recorder, output);
         deleteCommand.execute();
 
         //Replay insert command
-        Command replayCommand = new ReplayCommand(recorder);
+        Command replayCommand = new ReplayCommand(recorder, output);
         replayCommand.execute();
 
         assertEquals(mockInput, engine.getBufferContents());
+    }
+
+    @Test
+    void replaySelectCommand() {
+        String mockInput = "Salut à tous";
+        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
+        invoker.setReadStream(mockReadStream);
+        Command insertCommand = new InsertCommand(engine, invoker, recorder, output);
+        insertCommand.execute();
+
+        //start recording
+        String selectionIndexes = "0"+System.lineSeparator()+"5"+System.lineSeparator();
+        new StartCommand(recorder, output).execute();
+        mockReadStream = new ByteArrayInputStream(selectionIndexes.getBytes());
+
+        invoker.setReadStream(mockReadStream);
+        Command selectCommand = new SelectCommand(engine, invoker, recorder, output);
+        selectCommand.execute();
+        //stop recording
+        new StopCommand(recorder, output).execute();
+        //reinitialize selection
+        engine.getSelection().setBeginIndex(0);
+        engine.getSelection().setEndIndex(0);
+
+        //Replay select command
+        Command replayCommand = new ReplayCommand(recorder, output);
+        replayCommand.execute();
+
+        assertEquals(0, engine.getSelection().getBeginIndex());
+        assertEquals(5, engine.getSelection().getEndIndex());
     }
 }

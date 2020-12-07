@@ -8,6 +8,8 @@ import fr.istic.aco.editor.receiver.contract.Recorder;
 import fr.istic.aco.editor.receiver.impl.EngineImpl;
 import fr.istic.aco.editor.receiver.impl.RecorderImpl;
 
+import java.io.PrintStream;
+
 public class EditorConfigurator {
     private Invoker invoker;
     private Engine receiver;
@@ -37,14 +39,16 @@ public class EditorConfigurator {
     }
 
     private void configureCommands() {
-        invoker.addCommand("Copy", new CopyCommand(receiver, recorder));
-        invoker.addCommand("Paste", new PasteCommand(receiver, recorder));
-        invoker.addCommand("Cut", new CutCommand(receiver, recorder));
-        invoker.addCommand("Delete", new DeleteCommand(receiver, recorder));
-        invoker.addCommand("Insert", new InsertCommand(receiver, invoker, recorder));
-        invoker.addCommand("Select", new SelectCommand(receiver, invoker, recorder));
-        invoker.addCommand("Start", new StartCommand(recorder));
-        invoker.addCommand("Stop", new StopCommand(recorder));
-        invoker.addCommand("Replay", new ReplayCommand(recorder));
+        PrintStream output = new PrintStream(System.out);
+        invoker.addCommand("copy", new CopyCommand(receiver, recorder, output));
+        invoker.addCommand("paste", new PasteCommand(receiver, recorder, output));
+        invoker.addCommand("cut", new CutCommand(receiver, recorder, output));
+        invoker.addCommand("delete", new DeleteCommand(receiver, recorder, output));
+        invoker.addCommand("insert", new InsertCommand(receiver, invoker, recorder, output));
+        invoker.addCommand("select", new SelectCommand(receiver, invoker, recorder, output));
+        invoker.addCommand("start", new StartCommand(recorder, output));
+        invoker.addCommand("stop", new StopCommand(recorder, output));
+        invoker.addCommand("replay", new ReplayCommand(recorder, output));
+        invoker.addCommand("quit", new QuitCommand(invoker, output));
     }
 }

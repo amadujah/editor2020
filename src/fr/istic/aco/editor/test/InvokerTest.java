@@ -23,7 +23,7 @@ public class InvokerTest {
         InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
         invoker.setReadStream(mockReadStream);
 
-        invoker.addCommand("Insert", mockCmd);
+        invoker.addCommand("insert", mockCmd);
 
         invoker.runInvokerLoop();
         Mockito.verify(mockCmd).execute();

@@ -1,27 +1,25 @@
 package fr.istic.aco.editor.command.impl;
 
 import fr.istic.aco.editor.command.contract.Command;
+import fr.istic.aco.editor.invoker.contract.Invoker;
 import fr.istic.aco.editor.memento.contract.Memento;
-import fr.istic.aco.editor.receiver.contract.Recorder;
 
 import java.io.PrintStream;
-import java.util.Objects;
 
-public class StartCommand implements Command {
-    private final Recorder recorder;
+/**
+ * @author amad & romaric
+ */
+public class QuitCommand implements Command {
+    private final Invoker receiver;
     private final PrintStream output;
 
-    public StartCommand(Recorder recorder, PrintStream output) {
+    public QuitCommand(Invoker receiver, PrintStream output) {
+        this.receiver = receiver;
         this.output = output;
-        Objects.requireNonNull(recorder);
-        this.recorder = recorder;
     }
-
     @Override
     public void execute() {
-        if (!recorder.isRecording()) {
-            recorder.start();
-        }
+        receiver.stopLoop();
     }
 
     @Override
