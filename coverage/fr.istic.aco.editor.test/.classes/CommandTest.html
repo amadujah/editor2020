@@ -1,0 +1,362 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CommandTest</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">fr.istic.aco.editor.test</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CommandTest (fr.istic.aco.editor.test)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CommandTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/ 18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (142/ 142)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package fr.istic.aco.editor.test;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import fr.istic.aco.editor.Observer.Observer;
+<i>4</i>&nbsp;import fr.istic.aco.editor.command.contract.Command;
+<i>5</i>&nbsp;import fr.istic.aco.editor.command.impl.*;
+<i>6</i>&nbsp;import fr.istic.aco.editor.invoker.contract.Invoker;
+<i>7</i>&nbsp;import fr.istic.aco.editor.invoker.impl.InvokerImpl;
+<i>8</i>&nbsp;import fr.istic.aco.editor.memento.contract.Memento;
+<i>9</i>&nbsp;import fr.istic.aco.editor.receiver.contract.Engine;
+<i>10</i>&nbsp;import fr.istic.aco.editor.receiver.contract.Recorder;
+<i>11</i>&nbsp;import fr.istic.aco.editor.receiver.contract.Selection;
+<i>12</i>&nbsp;import fr.istic.aco.editor.receiver.impl.EngineImpl;
+<i>13</i>&nbsp;import fr.istic.aco.editor.receiver.impl.RecorderImpl;
+<i>14</i>&nbsp;import fr.istic.aco.editor.receiver.impl.UndoManager;
+<i>15</i>&nbsp;import org.junit.jupiter.api.BeforeEach;
+<i>16</i>&nbsp;import org.junit.jupiter.api.DisplayName;
+<i>17</i>&nbsp;import org.junit.jupiter.api.Test;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;import java.io.ByteArrayInputStream;
+<i>20</i>&nbsp;import java.io.InputStream;
+<i>21</i>&nbsp;import java.io.PrintStream;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;import static org.junit.jupiter.api.Assertions.*;
+<i>24</i>&nbsp;import static org.mockito.Mockito.*;
+<i>25</i>&nbsp;
+<b class="fc"><i>26</i>&nbsp;public class CommandTest {</b>
+<i>27</i>&nbsp;    private Engine engine;
+<i>28</i>&nbsp;    private Invoker invoker;
+<i>29</i>&nbsp;    private Recorder recorder;
+<i>30</i>&nbsp;    private PrintStream output;
+<i>31</i>&nbsp;    private UndoManager undoManager;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    @BeforeEach
+<i>34</i>&nbsp;    void setup() {
+<b class="fc"><i>35</i>&nbsp;        engine = new EngineImpl();</b>
+<b class="fc"><i>36</i>&nbsp;        invoker = new InvokerImpl();</b>
+<b class="fc"><i>37</i>&nbsp;        recorder = new RecorderImpl();</b>
+<b class="fc"><i>38</i>&nbsp;        output = new PrintStream(System.out);</b>
+<b class="fc"><i>39</i>&nbsp;        undoManager = new UndoManager();</b>
+<b class="fc"><i>40</i>&nbsp;    }</b>
+<i>41</i>&nbsp;    @Test
+<i>42</i>&nbsp;    void copyCommand() {
+<b class="fc"><i>43</i>&nbsp;        engine.insert(&quot;Hello World&quot;);</b>
+<b class="fc"><i>44</i>&nbsp;        Selection selection = engine.getSelection();</b>
+<b class="fc"><i>45</i>&nbsp;        selection.setBeginIndex(0);</b>
+<b class="fc"><i>46</i>&nbsp;        selection.setEndIndex(5);</b>
+<b class="fc"><i>47</i>&nbsp;        Command copy = new CopyCommand(engine, recorder, output);</b>
+<b class="fc"><i>48</i>&nbsp;        copy.execute();</b>
+<i>49</i>&nbsp;
+<b class="fc"><i>50</i>&nbsp;        assertEquals(engine.getClipboardContents(), &quot;Hello&quot;);</b>
+<b class="fc"><i>51</i>&nbsp;    }</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    @Test
+<i>54</i>&nbsp;    void cutCommand() {
+<b class="fc"><i>55</i>&nbsp;        engine.insert(&quot;Hello World&quot;);</b>
+<b class="fc"><i>56</i>&nbsp;        Selection selection = engine.getSelection();</b>
+<b class="fc"><i>57</i>&nbsp;        selection.setBeginIndex(0);</b>
+<b class="fc"><i>58</i>&nbsp;        selection.setEndIndex(5);</b>
+<b class="fc"><i>59</i>&nbsp;        Command cut = new CutCommand(engine, recorder, output);</b>
+<b class="fc"><i>60</i>&nbsp;        cut.execute();</b>
+<i>61</i>&nbsp;
+<b class="fc"><i>62</i>&nbsp;        assertEquals(engine.getClipboardContents(), &quot;Hello&quot;);</b>
+<b class="fc"><i>63</i>&nbsp;        assertEquals(engine.getBufferContents(), &quot; World&quot;);</b>
+<b class="fc"><i>64</i>&nbsp;    }</b>
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    @Test
+<i>67</i>&nbsp;    void pastCommand() {
+<b class="fc"><i>68</i>&nbsp;        engine.insert(&quot;Hello World&quot;);</b>
+<i>69</i>&nbsp;
+<b class="fc"><i>70</i>&nbsp;        Selection selection = engine.getSelection();</b>
+<b class="fc"><i>71</i>&nbsp;        selection.setBeginIndex(0);</b>
+<b class="fc"><i>72</i>&nbsp;        selection.setEndIndex(5);</b>
+<b class="fc"><i>73</i>&nbsp;        Command cut = new CutCommand(engine, recorder, output);</b>
+<b class="fc"><i>74</i>&nbsp;        cut.execute();</b>
+<i>75</i>&nbsp;
+<b class="fc"><i>76</i>&nbsp;        selection.setBeginIndex(selection.getBufferEndIndex());</b>
+<b class="fc"><i>77</i>&nbsp;        selection.setEndIndex(selection.getBufferEndIndex());</b>
+<b class="fc"><i>78</i>&nbsp;        Command paste = new PasteCommand(engine, recorder);</b>
+<i>79</i>&nbsp;
+<b class="fc"><i>80</i>&nbsp;        paste.execute();</b>
+<i>81</i>&nbsp;
+<b class="fc"><i>82</i>&nbsp;        assertEquals(engine.getBufferContents(), &quot; WorldHello&quot;);</b>
+<b class="fc"><i>83</i>&nbsp;    }</b>
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    @Test
+<i>86</i>&nbsp;    void insertCommand() {
+<b class="fc"><i>87</i>&nbsp;        String mockInput = &quot;Salut&quot;;</b>
+<b class="fc"><i>88</i>&nbsp;        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());</b>
+<b class="fc"><i>89</i>&nbsp;        invoker.setReadStream(mockReadStream);</b>
+<b class="fc"><i>90</i>&nbsp;        Command insert = new InsertCommand(engine, invoker, recorder, undoManager);</b>
+<b class="fc"><i>91</i>&nbsp;        insert.execute();</b>
+<i>92</i>&nbsp;
+<b class="fc"><i>93</i>&nbsp;        assertEquals(engine.getBufferContents(), mockInput);</b>
+<b class="fc"><i>94</i>&nbsp;    }</b>
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    @Test
+<i>97</i>&nbsp;    void selectionCommand() {
+<b class="fc"><i>98</i>&nbsp;        String content = &quot;Salut tout le monde&quot;;</b>
+<b class="fc"><i>99</i>&nbsp;        engine.insert(content);</b>
+<b class="fc"><i>100</i>&nbsp;        String mockInput = &quot;0&quot; + System.lineSeparator() + &quot;5&quot;;</b>
+<b class="fc"><i>101</i>&nbsp;        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());</b>
+<b class="fc"><i>102</i>&nbsp;        invoker.setReadStream(mockReadStream);</b>
+<b class="fc"><i>103</i>&nbsp;        Command selection = new SelectCommand(engine, invoker, recorder);</b>
+<b class="fc"><i>104</i>&nbsp;        selection.execute();</b>
+<i>105</i>&nbsp;
+<b class="fc"><i>106</i>&nbsp;        Command copy = new CopyCommand(engine, recorder, output);</b>
+<b class="fc"><i>107</i>&nbsp;        copy.execute();</b>
+<i>108</i>&nbsp;
+<b class="fc"><i>109</i>&nbsp;        assertEquals(engine.getClipboardContents(), &quot;Salut&quot;);</b>
+<b class="fc"><i>110</i>&nbsp;    }</b>
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    /**
+<i>113</i>&nbsp;     * Suppression de &quot; tout le monde&quot; du buffer
+<i>114</i>&nbsp;     */
+<i>115</i>&nbsp;    @Test
+<i>116</i>&nbsp;    void deleteCommand() {
+<b class="fc"><i>117</i>&nbsp;        String content = &quot;Salut tout le monde&quot;;</b>
+<b class="fc"><i>118</i>&nbsp;        engine.insert(content);</b>
+<i>119</i>&nbsp;
+<b class="fc"><i>120</i>&nbsp;        String mockInput = &quot;5&quot; + System.lineSeparator() + content.length();</b>
+<b class="fc"><i>121</i>&nbsp;        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());</b>
+<b class="fc"><i>122</i>&nbsp;        invoker.setReadStream(mockReadStream);</b>
+<b class="fc"><i>123</i>&nbsp;        Command selection = new SelectCommand(engine, invoker, recorder);</b>
+<b class="fc"><i>124</i>&nbsp;        selection.execute();</b>
+<i>125</i>&nbsp;
+<b class="fc"><i>126</i>&nbsp;        Command delete = new DeleteCommand(engine, recorder, undoManager);</b>
+<b class="fc"><i>127</i>&nbsp;        delete.execute();</b>
+<i>128</i>&nbsp;
+<b class="fc"><i>129</i>&nbsp;        assertEquals(engine.getBufferContents(), &quot;Salut&quot;);</b>
+<b class="fc"><i>130</i>&nbsp;    }</b>
+<i>131</i>&nbsp;
+<i>132</i>&nbsp;    @DisplayName(&quot;Buffer remain the same if delete without selection&quot;)
+<i>133</i>&nbsp;    @Test
+<i>134</i>&nbsp;    void deleteCommand1() {
+<b class="fc"><i>135</i>&nbsp;        String content = &quot;Salut tout le monde&quot;;</b>
+<b class="fc"><i>136</i>&nbsp;        engine.insert(content);</b>
+<i>137</i>&nbsp;
+<b class="fc"><i>138</i>&nbsp;        Command delete = new DeleteCommand(engine, recorder, undoManager);</b>
+<b class="fc"><i>139</i>&nbsp;        delete.execute();</b>
+<b class="fc"><i>140</i>&nbsp;        assertEquals(engine.getBufferContents(), content);</b>
+<b class="fc"><i>141</i>&nbsp;    }</b>
+<i>142</i>&nbsp;
+<i>143</i>&nbsp;    @DisplayName(&quot;&quot;)
+<i>144</i>&nbsp;    @Test
+<i>145</i>&nbsp;    void replayCommand() {
+<b class="fc"><i>146</i>&nbsp;        String mockInput = &quot;Salut à tous&quot;;</b>
+<i>147</i>&nbsp;        //start recording
+<b class="fc"><i>148</i>&nbsp;        new StartCommand(recorder).execute();</b>
+<b class="fc"><i>149</i>&nbsp;        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());</b>
+<b class="fc"><i>150</i>&nbsp;        invoker.setReadStream(mockReadStream);</b>
+<b class="fc"><i>151</i>&nbsp;        Command insertCommand = new InsertCommand(engine, invoker, recorder, undoManager);</b>
+<b class="fc"><i>152</i>&nbsp;        insertCommand.execute();</b>
+<i>153</i>&nbsp;        //stop recording
+<b class="fc"><i>154</i>&nbsp;        new StopCommand(recorder).execute();</b>
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;        //Delete buffer content
+<b class="fc"><i>157</i>&nbsp;        String selectIndex = 0 + System.lineSeparator() + mockInput.length();</b>
+<b class="fc"><i>158</i>&nbsp;        mockReadStream = new ByteArrayInputStream(selectIndex.getBytes());</b>
+<b class="fc"><i>159</i>&nbsp;        invoker.setReadStream(mockReadStream);</b>
+<b class="fc"><i>160</i>&nbsp;        Command selectCommand = new SelectCommand(engine, invoker, recorder);</b>
+<b class="fc"><i>161</i>&nbsp;        selectCommand.execute();</b>
+<i>162</i>&nbsp;
+<b class="fc"><i>163</i>&nbsp;        Command deleteCommand = new DeleteCommand(engine, recorder, undoManager);</b>
+<b class="fc"><i>164</i>&nbsp;        deleteCommand.execute();</b>
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;        //Replay insert command
+<b class="fc"><i>167</i>&nbsp;        Command replayCommand = new ReplayCommand(recorder, output);</b>
+<b class="fc"><i>168</i>&nbsp;        replayCommand.execute();</b>
+<i>169</i>&nbsp;
+<b class="fc"><i>170</i>&nbsp;        assertEquals(mockInput, engine.getBufferContents());</b>
+<b class="fc"><i>171</i>&nbsp;    }</b>
+<i>172</i>&nbsp;
+<i>173</i>&nbsp;    @Test
+<i>174</i>&nbsp;    void replaySelectCommand() {
+<b class="fc"><i>175</i>&nbsp;        insertTextInBuffer();</b>
+<i>176</i>&nbsp;
+<i>177</i>&nbsp;        //start recording
+<b class="fc"><i>178</i>&nbsp;        String selectionIndexes = &quot;0&quot;+System.lineSeparator()+&quot;5&quot;+System.lineSeparator();</b>
+<b class="fc"><i>179</i>&nbsp;        new StartCommand(recorder).execute();</b>
+<b class="fc"><i>180</i>&nbsp;        InputStream mockReadStream = new ByteArrayInputStream(selectionIndexes.getBytes());</b>
+<i>181</i>&nbsp;
+<b class="fc"><i>182</i>&nbsp;        invoker.setReadStream(mockReadStream);</b>
+<b class="fc"><i>183</i>&nbsp;        Command selectCommand = new SelectCommand(engine, invoker, recorder);</b>
+<b class="fc"><i>184</i>&nbsp;        selectCommand.execute();</b>
+<i>185</i>&nbsp;        //stop recording
+<b class="fc"><i>186</i>&nbsp;        new StopCommand(recorder).execute();</b>
+<i>187</i>&nbsp;        //reinitialize selection
+<b class="fc"><i>188</i>&nbsp;        engine.getSelection().setBeginIndex(0);</b>
+<b class="fc"><i>189</i>&nbsp;        engine.getSelection().setEndIndex(0);</b>
+<i>190</i>&nbsp;
+<i>191</i>&nbsp;        //Replay select command
+<b class="fc"><i>192</i>&nbsp;        Command replayCommand = new ReplayCommand(recorder, output);</b>
+<b class="fc"><i>193</i>&nbsp;        replayCommand.execute();</b>
+<i>194</i>&nbsp;
+<b class="fc"><i>195</i>&nbsp;        assertEquals(0, engine.getSelection().getBeginIndex());</b>
+<b class="fc"><i>196</i>&nbsp;        assertEquals(5, engine.getSelection().getEndIndex());</b>
+<b class="fc"><i>197</i>&nbsp;    }</b>
+<i>198</i>&nbsp;
+<i>199</i>&nbsp;    @Test
+<i>200</i>&nbsp;    void undoCommand() {
+<b class="fc"><i>201</i>&nbsp;        insertTextInBuffer();</b>
+<i>202</i>&nbsp;        //undoCommand action
+<b class="fc"><i>203</i>&nbsp;        Command undoCommand = new UndoCommand(undoManager);</b>
+<i>204</i>&nbsp;
+<i>205</i>&nbsp;        @SuppressWarnings(&quot;unchecked&quot;)
+<b class="fc"><i>206</i>&nbsp;        Observer&lt;Memento&gt; obs2 = mock(Observer.class);</b>
+<i>207</i>&nbsp;
+<b class="fc"><i>208</i>&nbsp;        undoManager.register(obs2);</b>
+<b class="fc"><i>209</i>&nbsp;        undoCommand.execute();</b>
+<i>210</i>&nbsp;
+<i>211</i>&nbsp;        // Check that the updates were sent to observers
+<b class="fc"><i>212</i>&nbsp;        verify(obs2).doUpdate(undoManager);</b>
+<b class="fc"><i>213</i>&nbsp;    }</b>
+<i>214</i>&nbsp;
+<i>215</i>&nbsp;    private void insertTextInBuffer() {
+<b class="fc"><i>216</i>&nbsp;        String mockInput = &quot;Salut à tous&quot;;</b>
+<b class="fc"><i>217</i>&nbsp;        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());</b>
+<b class="fc"><i>218</i>&nbsp;        invoker.setReadStream(mockReadStream);</b>
+<b class="fc"><i>219</i>&nbsp;        InsertCommand insert = new InsertCommand(engine, invoker, recorder, undoManager);</b>
+<b class="fc"><i>220</i>&nbsp;        insert.execute();</b>
+<b class="fc"><i>221</i>&nbsp;    }</b>
+<i>222</i>&nbsp;
+<i>223</i>&nbsp;    @Test
+<i>224</i>&nbsp;    void redoCommand() {
+<b class="fc"><i>225</i>&nbsp;        String mockInput = &quot;Salut à tous&quot;;</b>
+<b class="fc"><i>226</i>&nbsp;        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());</b>
+<b class="fc"><i>227</i>&nbsp;        invoker.setReadStream(mockReadStream);</b>
+<b class="fc"><i>228</i>&nbsp;        InsertCommand insert = new InsertCommand(engine, invoker, recorder, undoManager);</b>
+<b class="fc"><i>229</i>&nbsp;        insert.execute();</b>
+<i>230</i>&nbsp;        //undoCommand action
+<b class="fc"><i>231</i>&nbsp;        Command undoCommand = new UndoCommand(undoManager);</b>
+<b class="fc"><i>232</i>&nbsp;        undoCommand.execute();</b>
+<b class="fc"><i>233</i>&nbsp;        insert.doUpdate(undoManager);</b>
+<b class="fc"><i>234</i>&nbsp;        assertEquals(&quot;&quot;, engine.getBufferContents());</b>
+<i>235</i>&nbsp;
+<i>236</i>&nbsp;        //Redo the last undone action
+<b class="fc"><i>237</i>&nbsp;        Command redoCommand = new RedoCommand(undoManager);</b>
+<b class="fc"><i>238</i>&nbsp;        redoCommand.execute();</b>
+<i>239</i>&nbsp;
+<b class="fc"><i>240</i>&nbsp;        assertEquals(mockInput, engine.getBufferContents());</b>
+<b class="fc"><i>241</i>&nbsp;    }</b>
+<i>242</i>&nbsp;    /**
+<i>243</i>&nbsp;     * Robustness test cases
+<i>244</i>&nbsp;     */
+<i>245</i>&nbsp;    @DisplayName(&quot;Null receiver on command throws NullPointerException&quot;)
+<i>246</i>&nbsp;    @Test
+<i>247</i>&nbsp;    void nullReceiverOnCommand() {
+<b class="fc"><i>248</i>&nbsp;        assertThrows(NullPointerException.class, () -&gt; new CopyCommand(null, recorder, output));</b>
+<b class="fc"><i>249</i>&nbsp;    }</b>
+<i>250</i>&nbsp;
+<i>251</i>&nbsp;    @DisplayName(&quot;Null invoker on command throws NullPointerException&quot;)
+<i>252</i>&nbsp;    @Test
+<i>253</i>&nbsp;    void nullInvokerOnCommand() {
+<b class="fc"><i>254</i>&nbsp;        assertThrows(NullPointerException.class, () -&gt; new InsertCommand(engine, null, recorder, undoManager));</b>
+<b class="fc"><i>255</i>&nbsp;    }</b>
+<i>256</i>&nbsp;
+<i>257</i>&nbsp;    @DisplayName(&quot;Null invoker and receiver on command throws NullPointerException&quot;)
+<i>258</i>&nbsp;    @Test
+<i>259</i>&nbsp;    void nullInvokerAndReceiverOnCommand() {
+<b class="fc"><i>260</i>&nbsp;        assertThrows(NullPointerException.class, () -&gt; new InsertCommand(null, null, recorder, undoManager));</b>
+<b class="fc"><i>261</i>&nbsp;    }</b>
+<i>262</i>&nbsp;
+<i>263</i>&nbsp;    /**
+<i>264</i>&nbsp;     * Register &amp; Unregister observers
+<i>265</i>&nbsp;     */
+<i>266</i>&nbsp;
+<i>267</i>&nbsp;    @Test
+<i>268</i>&nbsp;    void registerAndUnregsiterObservers() {
+<i>269</i>&nbsp;        @SuppressWarnings(&quot;unchecked&quot;)
+<b class="fc"><i>270</i>&nbsp;        Observer&lt;Memento&gt; obs = mock(Observer.class);</b>
+<i>271</i>&nbsp;
+<b class="fc"><i>272</i>&nbsp;        undoManager.register(obs);</b>
+<b class="fc"><i>273</i>&nbsp;        assertTrue(undoManager.isRegistered(obs));</b>
+<i>274</i>&nbsp;
+<b class="fc"><i>275</i>&nbsp;        undoManager.unregister(obs);</b>
+<b class="fc"><i>276</i>&nbsp;        assertFalse(undoManager.isRegistered(obs));</b>
+<b class="fc"><i>277</i>&nbsp;    }</b>
+<i>278</i>&nbsp;
+<i>279</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-12-20 21:34</div>
+</div>
+</body>
+</html>

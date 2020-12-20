@@ -1,0 +1,150 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RecorderImpl</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">fr.istic.aco.editor.receiver.impl</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RecorderImpl (fr.istic.aco.editor.receiver.impl)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RecorderImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (23/ 23)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package fr.istic.aco.editor.receiver.impl;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import fr.istic.aco.editor.command.contract.Command;
+<i>4</i>&nbsp;import fr.istic.aco.editor.memento.contract.Memento;
+<i>5</i>&nbsp;import fr.istic.aco.editor.receiver.contract.Recorder;
+<i>6</i>&nbsp;import fr.istic.aco.editor.utils.Pair;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.util.ArrayList;
+<i>9</i>&nbsp;import java.util.List;
+<i>10</i>&nbsp;import java.util.Optional;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;public class RecorderImpl implements Recorder {
+<i>13</i>&nbsp;    private final List&lt;Pair&lt;Command, Optional&lt;Memento&gt;&gt;&gt; pairs;
+<b class="fc"><i>14</i>&nbsp;    private boolean isReplaying = false;</b>
+<b class="fc"><i>15</i>&nbsp;    private boolean isRecording = false;</b>
+<i>16</i>&nbsp;
+<b class="fc"><i>17</i>&nbsp;    public RecorderImpl() {</b>
+<b class="fc"><i>18</i>&nbsp;        pairs = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>19</i>&nbsp;    }</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * Save the command for replaying it after
+<i>23</i>&nbsp;     * @param command to save
+<i>24</i>&nbsp;     */
+<i>25</i>&nbsp;    @Override
+<i>26</i>&nbsp;    public void save(Command command) {
+<b class="fc"><i>27</i>&nbsp;        Optional&lt;Memento&gt; memento = command.getMemento();</b>
+<b class="fc"><i>28</i>&nbsp;        pairs.add(Pair.of(command, memento));</b>
+<b class="fc"><i>29</i>&nbsp;    }</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @Override
+<i>32</i>&nbsp;    public void start() {
+<b class="fc"><i>33</i>&nbsp;        isRecording = true;</b>
+<b class="fc"><i>34</i>&nbsp;    }</b>
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    @Override
+<i>38</i>&nbsp;    public void stop() {
+<b class="fc"><i>39</i>&nbsp;        isRecording = false;</b>
+<i>40</i>&nbsp;
+<b class="fc"><i>41</i>&nbsp;    }</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * Browse all the recorded commands and replay them
+<i>45</i>&nbsp;     */
+<i>46</i>&nbsp;    @Override
+<i>47</i>&nbsp;    public void replay() {
+<b class="fc"><i>48</i>&nbsp;        isReplaying = true;</b>
+<b class="fc"><i>49</i>&nbsp;        for (Pair&lt;Command, Optional&lt;Memento&gt;&gt; pair : pairs) {</b>
+<b class="fc"><i>50</i>&nbsp;            Command command = pair.getKey();</b>
+<b class="fc"><i>51</i>&nbsp;            Optional&lt;Memento&gt; memento = pair.getValue();</b>
+<b class="fc"><i>52</i>&nbsp;            memento.ifPresent(command::setMemento);</b>
+<b class="fc"><i>53</i>&nbsp;            command.execute();</b>
+<b class="fc"><i>54</i>&nbsp;        }</b>
+<b class="fc"><i>55</i>&nbsp;        isReplaying = false;</b>
+<b class="fc"><i>56</i>&nbsp;    }</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    @Override
+<i>59</i>&nbsp;    public boolean isReplaying() {
+<b class="fc"><i>60</i>&nbsp;        return isReplaying;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    @Override
+<i>64</i>&nbsp;    public boolean isRecording() {
+<b class="fc"><i>65</i>&nbsp;        return isRecording;</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-12-20 21:34</div>
+</div>
+</body>
+</html>

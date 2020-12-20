@@ -1,0 +1,109 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Engine</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">fr.istic.aco.editor.receiver.contract</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Engine (fr.istic.aco.editor.receiver.contract)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">Engine</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package fr.istic.aco.editor.receiver.contract;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import fr.istic.aco.editor.Observer.Subject;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * Main API for the text editing engine
+<i>7</i>&nbsp; * Notify Observes if buffer changes
+<i>8</i>&nbsp; * @author Amadou &amp; Romaric
+<i>9</i>&nbsp; * @version 1.0
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;public interface Engine extends Subject&lt;StringBuffer&gt; {
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    /**
+<i>15</i>&nbsp;     * Provides access to the selection control object
+<i>16</i>&nbsp;     * @return the selection object
+<i>17</i>&nbsp;     */
+<i>18</i>&nbsp;    Selection getSelection();
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    /**
+<i>21</i>&nbsp;     * Provides the whole contents of the buffer, as a string
+<i>22</i>&nbsp;     * @return a copy of the buffer&#39;s contents
+<i>23</i>&nbsp;     */
+<i>24</i>&nbsp;    String getBufferContents();
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    /**
+<i>27</i>&nbsp;     * Provides the clipboard contents
+<i>28</i>&nbsp;     * @return a copy of the clipboard&#39;s contents
+<i>29</i>&nbsp;     */
+<i>30</i>&nbsp;    String getClipboardContents();
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * Removes the text within the interval
+<i>34</i>&nbsp;     * specified by the selection control object,
+<i>35</i>&nbsp;     * from the buffer.
+<i>36</i>&nbsp;     */
+<i>37</i>&nbsp;    void cutSelectedText();
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * Copies the text within the interval
+<i>41</i>&nbsp;     * specified by the selection control object
+<i>42</i>&nbsp;     * into the clipboard.
+<i>43</i>&nbsp;     */
+<i>44</i>&nbsp;    void copySelectedText();
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    /**
+<i>47</i>&nbsp;     * Replaces the text within the interval specified by the selection object with
+<i>48</i>&nbsp;     * the contents of the clipboard.
+<i>49</i>&nbsp;     */
+<i>50</i>&nbsp;    void pasteClipboard();
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    /**
+<i>53</i>&nbsp;     * Inserts a string in the buffer, which replaces the contents of the selection
+<i>54</i>&nbsp;     * @param s the text to insert
+<i>55</i>&nbsp;     */
+<i>56</i>&nbsp;    void insert(String s);
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    /**
+<i>59</i>&nbsp;     * Removes the contents of the selection in the buffer
+<i>60</i>&nbsp;     */
+<i>61</i>&nbsp;    void delete();
+<i>62</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-12-20 21:34</div>
+</div>
+</body>
+</html>

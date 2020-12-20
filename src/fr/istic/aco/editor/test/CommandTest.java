@@ -20,8 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class CommandTest {
@@ -173,16 +172,12 @@ public class CommandTest {
 
     @Test
     void replaySelectCommand() {
-        String mockInput = "Salut à tous";
-        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
-        invoker.setReadStream(mockReadStream);
-        Command insertCommand = new InsertCommand(engine, invoker, recorder, undoManager);
-        insertCommand.execute();
+        insertTextInBuffer();
 
         //start recording
         String selectionIndexes = "0"+System.lineSeparator()+"5"+System.lineSeparator();
         new StartCommand(recorder).execute();
-        mockReadStream = new ByteArrayInputStream(selectionIndexes.getBytes());
+        InputStream mockReadStream = new ByteArrayInputStream(selectionIndexes.getBytes());
 
         invoker.setReadStream(mockReadStream);
         Command selectCommand = new SelectCommand(engine, invoker, recorder);
@@ -203,14 +198,11 @@ public class CommandTest {
 
     @Test
     void undoCommand() {
-        String mockInput = "Salut à tous";
-        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
-        invoker.setReadStream(mockReadStream);
-        Command insert = new InsertCommand(engine, invoker, recorder, undoManager);
-        insert.execute();
+        insertTextInBuffer();
         //undoCommand action
         Command undoCommand = new UndoCommand(undoManager);
 
+        @SuppressWarnings("unchecked")
         Observer<Memento> obs2 = mock(Observer.class);
 
         undoManager.register(obs2);
@@ -220,6 +212,33 @@ public class CommandTest {
         verify(obs2).doUpdate(undoManager);
     }
 
+    private void insertTextInBuffer() {
+        String mockInput = "Salut à tous";
+        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
+        invoker.setReadStream(mockReadStream);
+        InsertCommand insert = new InsertCommand(engine, invoker, recorder, undoManager);
+        insert.execute();
+    }
+
+    @Test
+    void redoCommand() {
+        String mockInput = "Salut à tous";
+        InputStream mockReadStream = new ByteArrayInputStream(mockInput.getBytes());
+        invoker.setReadStream(mockReadStream);
+        InsertCommand insert = new InsertCommand(engine, invoker, recorder, undoManager);
+        insert.execute();
+        //undoCommand action
+        Command undoCommand = new UndoCommand(undoManager);
+        undoCommand.execute();
+        insert.doUpdate(undoManager);
+        assertEquals("", engine.getBufferContents());
+
+        //Redo the last undone action
+        Command redoCommand = new RedoCommand(undoManager);
+        redoCommand.execute();
+
+        assertEquals(mockInput, engine.getBufferContents());
+    }
     /**
      * Robustness test cases
      */
@@ -240,4 +259,21 @@ public class CommandTest {
     void nullInvokerAndReceiverOnCommand() {
         assertThrows(NullPointerException.class, () -> new InsertCommand(null, null, recorder, undoManager));
     }
+
+    /**
+     * Register & Unregister observers
+     */
+
+    @Test
+    void registerAndUnregsiterObservers() {
+        @SuppressWarnings("unchecked")
+        Observer<Memento> obs = mock(Observer.class);
+
+        undoManager.register(obs);
+        assertTrue(undoManager.isRegistered(obs));
+
+        undoManager.unregister(obs);
+        assertFalse(undoManager.isRegistered(obs));
+    }
+
 }

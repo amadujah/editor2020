@@ -6,7 +6,7 @@ import fr.istic.aco.editor.Observer.Subject;
 import java.io.PrintStream;
 
 /**
- * Observes buffer content changes
+ * Observes buffer content changes then prints new buffer content
  */
 public class BufferChange implements Observer<StringBuffer> {
     private final PrintStream out = new PrintStream(System.out);

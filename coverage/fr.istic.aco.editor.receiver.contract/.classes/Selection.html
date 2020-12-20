@@ -1,0 +1,107 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Selection</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">fr.istic.aco.editor.receiver.contract</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Selection (fr.istic.aco.editor.receiver.contract)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">Selection</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package fr.istic.aco.editor.receiver.contract;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * Provides access to selection control operations
+<i>5</i>&nbsp; *
+<i>6</i>&nbsp; * @author Amadou &amp; Romaric
+<i>7</i>&nbsp; * @version 1.0
+<i>8</i>&nbsp; */
+<i>9</i>&nbsp;public interface Selection {
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    /**
+<i>12</i>&nbsp;     * Provides the index of the first character designated
+<i>13</i>&nbsp;     * by the selection.
+<i>14</i>&nbsp;     *
+<i>15</i>&nbsp;     * @return
+<i>16</i>&nbsp;     */
+<i>17</i>&nbsp;    int getBeginIndex();
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * Provides the index of the first character
+<i>21</i>&nbsp;     * after the last character designated
+<i>22</i>&nbsp;     * by the selection.
+<i>23</i>&nbsp;     *
+<i>24</i>&nbsp;     * @return the end index
+<i>25</i>&nbsp;     */
+<i>26</i>&nbsp;    int getEndIndex();
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Provides the index of the first character in the buffer
+<i>30</i>&nbsp;     *
+<i>31</i>&nbsp;     * @return the buffer&#39;s begin index
+<i>32</i>&nbsp;     */
+<i>33</i>&nbsp;    int getBufferBeginIndex();
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    /**
+<i>36</i>&nbsp;     * Provides the index of the first &quot;virtual&quot; character
+<i>37</i>&nbsp;     * after the end of the buffer
+<i>38</i>&nbsp;     *
+<i>39</i>&nbsp;     * @return the post end buffer index
+<i>40</i>&nbsp;     */
+<i>41</i>&nbsp;    int getBufferEndIndex();
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * Changes the value of the begin index of the selection
+<i>45</i>&nbsp;     *
+<i>46</i>&nbsp;     * @param beginIndex, must be within the buffer index range
+<i>47</i>&nbsp;     * @throws IndexOutOfBoundsException if the beginIndex is out of bounds
+<i>48</i>&nbsp;     */
+<i>49</i>&nbsp;    void setBeginIndex(int beginIndex);
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    /**
+<i>52</i>&nbsp;     * Changes the value of the end index of the selection
+<i>53</i>&nbsp;     *
+<i>54</i>&nbsp;     * @param endIndex, must be within the buffer index range
+<i>55</i>&nbsp;     * @throws IndexOutOfBoundsException if the beginIndex is out of bounds
+<i>56</i>&nbsp;     */
+<i>57</i>&nbsp;    void setEndIndex(int endIndex);
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-12-20 21:34</div>
+</div>
+</body>
+</html>
