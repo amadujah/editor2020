@@ -4,18 +4,20 @@ import fr.istic.aco.editor.command.contract.Command;
 import fr.istic.aco.editor.invoker.contract.Invoker;
 import fr.istic.aco.editor.memento.contract.Memento;
 
-import java.io.PrintStream;
+import java.util.Optional;
 
 /**
- * @author amad & romaric
+ * Concrete command of quit action
  */
 public class QuitCommand implements Command {
     private final Invoker receiver;
-    private final PrintStream output;
 
-    public QuitCommand(Invoker receiver, PrintStream output) {
+    /**
+     * Main contructor
+     * @param receiver of the command
+     */
+    public QuitCommand(Invoker receiver) {
         this.receiver = receiver;
-        this.output = output;
     }
     @Override
     public void execute() {
@@ -23,8 +25,8 @@ public class QuitCommand implements Command {
     }
 
     @Override
-    public Memento getMemento() {
-        return null;
+    public Optional<Memento> getMemento() {
+        return Optional.empty();
     }
 
     @Override

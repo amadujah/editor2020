@@ -7,6 +7,7 @@ import fr.istic.aco.editor.receiver.contract.Recorder;
 
 import java.io.PrintStream;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Concrete command of cut action
@@ -14,8 +15,14 @@ import java.util.Objects;
 public class CutCommand implements Command {
     private final Engine receiver;
     private final Recorder recorder;
-    private PrintStream output;
+    private final PrintStream output;
 
+    /**
+     * Main constructor
+     * @param receiver of the command
+     * @param recorder saves the command
+     * @param output
+     */
     public CutCommand(Engine receiver, Recorder recorder, PrintStream output) {
         this.output = output;
         Objects.requireNonNull(receiver);
@@ -36,12 +43,11 @@ public class CutCommand implements Command {
         }
 
         output.println("Contenu du presse papier : " + receiver.getClipboardContents());
-        output.println("Contenu du buffer : " + receiver.getBufferContents());
     }
 
     @Override
-    public Memento getMemento() {
-        return null;
+    public Optional<Memento> getMemento() {
+        return Optional.empty();
     }
 
     @Override

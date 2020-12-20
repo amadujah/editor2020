@@ -1,0 +1,10 @@
+fr.istic.aco.editor
+fr.istic.aco.editor.command.contract
+fr.istic.aco.editor.command.impl
+fr.istic.aco.editor.invoker.contract
+fr.istic.aco.editor.invoker.impl
+fr.istic.aco.editor.memento.contract
+fr.istic.aco.editor.Observer
+fr.istic.aco.editor.receiver.contract
+fr.istic.aco.editor.receiver.impl
+fr.istic.aco.editor.utils

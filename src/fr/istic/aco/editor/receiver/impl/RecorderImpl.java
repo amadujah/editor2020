@@ -7,9 +7,10 @@ import fr.istic.aco.editor.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RecorderImpl implements Recorder {
-    private final List<Pair<Command, Memento>> pairs;
+    private final List<Pair<Command, Optional<Memento>>> pairs;
     private boolean isReplaying = false;
     private boolean isRecording = false;
 
@@ -23,7 +24,7 @@ public class RecorderImpl implements Recorder {
      */
     @Override
     public void save(Command command) {
-        Memento memento = command.getMemento();
+        Optional<Memento> memento = command.getMemento();
         pairs.add(Pair.of(command, memento));
     }
 
@@ -45,10 +46,10 @@ public class RecorderImpl implements Recorder {
     @Override
     public void replay() {
         isReplaying = true;
-        for (Pair<Command, Memento> pair : pairs) {
+        for (Pair<Command, Optional<Memento>> pair : pairs) {
             Command command = pair.getKey();
-            Memento memento = pair.getValue();
-            command.setMemento(memento);
+            Optional<Memento> memento = pair.getValue();
+            memento.ifPresent(command::setMemento);
             command.execute();
         }
         isReplaying = false;

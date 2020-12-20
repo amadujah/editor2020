@@ -7,8 +7,8 @@ import fr.istic.aco.editor.receiver.contract.Engine;
 import fr.istic.aco.editor.receiver.contract.Recorder;
 import fr.istic.aco.editor.receiver.contract.Selection;
 
-import java.io.PrintStream;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Concrete command of select action
@@ -17,12 +17,16 @@ public class SelectCommand implements Command {
     private final Engine receiver;
     private final Invoker invoker;
     private final Recorder recorder;
-    private final PrintStream output;
     private int beginIndex;
     private int endIndex;
 
-    public SelectCommand(Engine receiver, Invoker invoker, Recorder recorder, PrintStream output) {
-        this.output = output;
+    /**
+     * Main constructor
+     * @param receiver of the command
+     * @param invoker of the command
+     * @param recorder saves the command
+     */
+    public SelectCommand(Engine receiver, Invoker invoker, Recorder recorder) {
         Objects.requireNonNull(receiver);
         Objects.requireNonNull(invoker);
         Objects.requireNonNull(recorder);
@@ -37,11 +41,13 @@ public class SelectCommand implements Command {
         if (!this.recorder.isReplaying()) {
             beginIndex = invoker.getBeginIndex();
             endIndex = invoker.getEndIndex();
+
+            //Si la sélection ne peut être effectuée, une exception est capturée.
             try {
                 selection.setBeginIndex(this.beginIndex);
                 selection.setEndIndex(this.endIndex);
             } catch (IndexOutOfBoundsException ex) {
-                output.println(ex.getMessage());
+                ex.printStackTrace();
             }
             //Sauvegarder la commande pour pouvoir la rejouer après
             if (recorder.isRecording()) {
@@ -54,12 +60,12 @@ public class SelectCommand implements Command {
     }
 
     @Override
-    public Memento getMemento() {
+    public Optional<Memento> getMemento() {
         SelectMemento memento = new SelectMemento();
         memento.setBeginIndex(this.beginIndex);
         memento.setEndIndex(this.endIndex);
 
-        return memento;
+        return Optional.of(memento);
     }
 
     @Override

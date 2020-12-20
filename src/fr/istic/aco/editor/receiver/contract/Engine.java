@@ -1,13 +1,15 @@
 package fr.istic.aco.editor.receiver.contract;
 
+import fr.istic.aco.editor.Observer.Subject;
+
 /**
  * Main API for the text editing engine
- *
+ * Notify Observes if buffer changes
  * @author Amadou & Romaric
  * @version 1.0
  */
 
-public interface Engine {
+public interface Engine extends Subject<StringBuffer> {
 
     /**
      * Provides access to the selection control object

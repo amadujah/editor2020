@@ -1,5 +1,7 @@
 package fr.istic.aco.editor.memento.contract;
 
+import java.util.Optional;
+
 /**
  * Originator API
  */
@@ -9,7 +11,7 @@ public interface Originator {
      * Save the state
      * @return the saved state memento
      */
-    Memento getMemento();
+    Optional<Memento> getMemento();
 
     /**
      * Restore the state

@@ -4,15 +4,17 @@ import fr.istic.aco.editor.command.contract.Command;
 import fr.istic.aco.editor.memento.contract.Memento;
 import fr.istic.aco.editor.receiver.contract.Recorder;
 
-import java.io.PrintStream;
 import java.util.Objects;
+import java.util.Optional;
 
 public class StopCommand implements Command {
     private final Recorder recorder;
-    private final PrintStream output;
 
-    public StopCommand(Recorder recorder, PrintStream output) {
-        this.output = output;
+    /**
+     * Main contructor
+     * @param recorder receiver of the command
+     */
+    public StopCommand(Recorder recorder) {
         Objects.requireNonNull(recorder);
         this.recorder = recorder;
     }
@@ -25,8 +27,8 @@ public class StopCommand implements Command {
     }
 
     @Override
-    public Memento getMemento() {
-        return null;
+    public Optional<Memento> getMemento() {
+        return Optional.empty();
     }
 
     @Override

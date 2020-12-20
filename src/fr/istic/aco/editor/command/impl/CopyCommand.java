@@ -15,11 +15,18 @@ import java.util.Optional;
 public class CopyCommand implements Command {
     private final Engine receiver;
     private final Recorder recorder;
-    private PrintStream output;
+    private final PrintStream output;
 
+    /**
+     * Main constructor
+     * @param receiver of the command
+     * @param recorder save command
+     * @param output
+     */
     public CopyCommand(Engine receiver, Recorder recorder, PrintStream output) {
         Objects.requireNonNull(receiver);
         Objects.requireNonNull(recorder);
+        Objects.requireNonNull(output);
         this.receiver = receiver;
         this.recorder = recorder;
         this.output = output;
@@ -40,13 +47,11 @@ public class CopyCommand implements Command {
     }
 
     @Override
-    public Memento getMemento() {
-
-        return null;
+    public Optional<Memento> getMemento() {
+        return Optional.empty();
     }
 
     @Override
     public void setMemento(Memento memento) {
-
     }
 }

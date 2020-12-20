@@ -1,5 +1,6 @@
 package fr.istic.aco.editor.test;
 
+import fr.istic.aco.editor.Observer.Observer;
 import fr.istic.aco.editor.receiver.contract.Engine;
 import fr.istic.aco.editor.receiver.contract.Selection;
 import fr.istic.aco.editor.receiver.impl.EngineImpl;
@@ -7,14 +8,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class EngineTest {
 
     private Engine engine;
-
+    private Observer<StringBuffer> obs1;
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
         engine = new EngineImpl();
+
+        obs1 = mock(Observer.class);
+
     }
 
     @Test
@@ -255,4 +260,43 @@ class EngineTest {
             selection.setEndIndex(1);
         });
     }
+
+    /**
+     * Test observer and subject
+     */
+
+    @Test
+    public void testNotify()  {
+        @SuppressWarnings("unchecked")
+        Observer<StringBuffer> obs2 = mock(Observer.class);
+
+        engine.register(obs1);
+        engine.register(obs2);
+
+        engine.setValue(new StringBuffer("test 1"));
+
+        // Check that the updates were sent to observers
+        verify(obs1).doUpdate(engine);
+        verify(obs2).doUpdate(engine);
+    }
+
+    @Test
+    public void testRegister()  {
+        engine.register(obs1);
+        assertTrue(engine.isRegistered(obs1));
+    }
+
+    @Test
+    public void testUnregister()  {
+        engine.register(obs1);
+        engine.unregister(obs1);
+        assertFalse(engine.isRegistered(obs1));
+    }
+
+    @Test
+    public void testSetValue()  {
+        engine.setValue(new StringBuffer("test"));
+        assertEquals("test", engine.getValue().toString());
+    }
+
 }

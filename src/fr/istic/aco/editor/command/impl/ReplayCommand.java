@@ -6,6 +6,7 @@ import fr.istic.aco.editor.receiver.contract.Recorder;
 
 import java.io.PrintStream;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Concrete command of replay action
@@ -14,9 +15,15 @@ public class ReplayCommand implements Command {
     private final Recorder recorder;
     private final PrintStream output;
 
+    /**
+     * Main contructor
+     *
+     * @param recorder receiver of the command
+     * @param output   prints to console
+     */
     public ReplayCommand(Recorder recorder, PrintStream output) {
-        this.output = output;
         Objects.requireNonNull(recorder, "Recorder cannot be null");
+        this.output = output;
         this.recorder = recorder;
     }
 
@@ -33,8 +40,8 @@ public class ReplayCommand implements Command {
     }
 
     @Override
-    public Memento getMemento() {
-        return null;
+    public Optional<Memento> getMemento() {
+        return Optional.empty();
     }
 
     @Override
