@@ -1,0 +1,89 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Recorder</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">fr.istic.aco.editor.receiver.contract</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Recorder (fr.istic.aco.editor.receiver.contract)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">Recorder</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package fr.istic.aco.editor.receiver.contract;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import fr.istic.aco.editor.command.contract.Command;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * Provides access to record operations
+<i>7</i>&nbsp; * @author Amadou &amp; Romaric
+<i>8</i>&nbsp; */
+<i>9</i>&nbsp;public interface Recorder {
+<i>10</i>&nbsp;    /**
+<i>11</i>&nbsp;     * Save the command
+<i>12</i>&nbsp;     * @param command the saved command
+<i>13</i>&nbsp;     */
+<i>14</i>&nbsp;    void save(Command command);
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * Start the recording
+<i>18</i>&nbsp;     */
+<i>19</i>&nbsp;    void start();
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * Stop the recording
+<i>23</i>&nbsp;     */
+<i>24</i>&nbsp;    void stop();
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    /**
+<i>27</i>&nbsp;     * Replay the recorded commands
+<i>28</i>&nbsp;     */
+<i>29</i>&nbsp;    void replay();
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    /**
+<i>32</i>&nbsp;     * Check if we are in a replaying mode
+<i>33</i>&nbsp;     * @return true if it&#39;s replay mode and false if it&#39;s not
+<i>34</i>&nbsp;     */
+<i>35</i>&nbsp;    boolean isReplaying();
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    /**
+<i>38</i>&nbsp;     * Check if we are in a recording mode
+<i>39</i>&nbsp;     * @return true if it&#39;s recording mode and false if it&#39;s not
+<i>40</i>&nbsp;     */
+<i>41</i>&nbsp;    boolean isRecording();
+<i>42</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-12-20 21:34</div>
+</div>
+</body>
+</html>

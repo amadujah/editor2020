@@ -64,7 +64,6 @@ public class UndoManager implements Subject<Memento> {
                 command.setMemento(memento.get());
                 setValue(memento.get());
             }
-            notifyRegisteredObservers();
         }
     }
 
@@ -116,6 +115,7 @@ public class UndoManager implements Subject<Memento> {
     @Override
     public void setValue(Memento v) {
         memento = v;
+        notifyRegisteredObservers();
     }
 
     private void notifyRegisteredObservers() {

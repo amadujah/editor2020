@@ -3,6 +3,7 @@ package fr.istic.aco.editor.test;
 import fr.istic.aco.editor.Observer.Observer;
 import fr.istic.aco.editor.receiver.contract.Engine;
 import fr.istic.aco.editor.receiver.contract.Selection;
+import fr.istic.aco.editor.receiver.impl.BufferChange;
 import fr.istic.aco.editor.receiver.impl.EngineImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,12 +15,11 @@ class EngineTest {
 
     private Engine engine;
     private Observer<StringBuffer> obs1;
+    @SuppressWarnings("unchecked")
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
         engine = new EngineImpl();
-
         obs1 = mock(Observer.class);
-
     }
 
     @Test
@@ -298,5 +298,4 @@ class EngineTest {
         engine.setValue(new StringBuffer("test"));
         assertEquals("test", engine.getValue().toString());
     }
-
 }

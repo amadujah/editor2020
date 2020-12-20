@@ -8,5 +8,4 @@ public interface Observer<T> {
      * @param s the updated subject
      */
     void doUpdate(Subject<T> s);
-
 }

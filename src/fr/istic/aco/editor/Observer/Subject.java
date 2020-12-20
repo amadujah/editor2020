@@ -38,12 +38,10 @@ public interface Subject<T> {
      */
     T getValue();
 
-
     /**
      * Updates the subject's value property
      *
      * @param v new value for subject's value
      */
     void setValue(T v);
-
 }

@@ -1,0 +1,100 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Invoker</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">fr.istic.aco.editor.invoker.contract</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Invoker (fr.istic.aco.editor.invoker.contract)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">Invoker</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package fr.istic.aco.editor.invoker.contract;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import fr.istic.aco.editor.command.contract.Command;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.io.InputStream;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;public interface Invoker {
+<i>8</i>&nbsp;    /**
+<i>9</i>&nbsp;     * Starts the reading of the read stream set by setReadStream operation
+<i>10</i>&nbsp;     */
+<i>11</i>&nbsp;    void runInvokerLoop();
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    /**
+<i>14</i>&nbsp;     * Stops the read stream loop now.
+<i>15</i>&nbsp;     */
+<i>16</i>&nbsp;    void stopLoop();
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    /**
+<i>19</i>&nbsp;     * Sets the read stream that be be used by runInvokerLoop
+<i>20</i>&nbsp;     *
+<i>21</i>&nbsp;     * @param inputStream the read stream
+<i>22</i>&nbsp;     * @throws IllegalArgumentException if inputStream is null
+<i>23</i>&nbsp;     */
+<i>24</i>&nbsp;    void setReadStream(InputStream inputStream);
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    /**
+<i>28</i>&nbsp;     * Registers a new keyword/command pair
+<i>29</i>&nbsp;     *
+<i>30</i>&nbsp;     * @param keyword a non-null String
+<i>31</i>&nbsp;     * @param cmd     a non-null Command reference
+<i>32</i>&nbsp;     * @throws IllegalArgumentException for null parameters
+<i>33</i>&nbsp;     */
+<i>34</i>&nbsp;    void addCommand(String keyword, Command cmd);
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     *
+<i>38</i>&nbsp;     * @return the text from UI
+<i>39</i>&nbsp;     */
+<i>40</i>&nbsp;    String getText();
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    /**
+<i>43</i>&nbsp;     *
+<i>44</i>&nbsp;     * @return the begin index of the selection
+<i>45</i>&nbsp;     */
+<i>46</i>&nbsp;    int getBeginIndex();
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     *
+<i>50</i>&nbsp;     * @return the end index of the selection
+<i>51</i>&nbsp;     */
+<i>52</i>&nbsp;    int getEndIndex();
+<i>53</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-12-20 21:34</div>
+</div>
+</body>
+</html>

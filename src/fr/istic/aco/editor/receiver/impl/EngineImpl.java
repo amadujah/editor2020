@@ -63,7 +63,6 @@ public class EngineImpl implements Engine {
         deleteSelection();
 
         setValue(buffer);
-        notifyRegisteredObservers();
     }
 
     /**
@@ -103,7 +102,6 @@ public class EngineImpl implements Engine {
         selection.setBeginIndex(selection.getBeginIndex() + s.length());
         selection.setEndIndex(selection.getEndIndex() + s.length());
         setValue(buffer);
-        notifyRegisteredObservers();
     }
 
     /**
@@ -114,7 +112,6 @@ public class EngineImpl implements Engine {
         deleteSelection();
 
         setValue(buffer);
-        notifyRegisteredObservers();
     }
 
     @Override
@@ -141,7 +138,6 @@ public class EngineImpl implements Engine {
         Objects.requireNonNull(o, "o cannot be null");
 
         return registeredObservers.contains(o);
-
     }
 
     @Override
@@ -152,8 +148,8 @@ public class EngineImpl implements Engine {
     @Override
     public void setValue(StringBuffer v) {
         buffer = v;
+        notifyRegisteredObservers();
     }
-
 
     private void deleteSelection() {
         buffer.delete(selection.getBeginIndex(), selection.getEndIndex());

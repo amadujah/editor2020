@@ -1,0 +1,140 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CutCommand</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">fr.istic.aco.editor.command.impl</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CutCommand (fr.istic.aco.editor.command.impl)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CutCommand</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (2/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (12/ 16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package fr.istic.aco.editor.command.impl;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import fr.istic.aco.editor.command.contract.Command;
+<i>4</i>&nbsp;import fr.istic.aco.editor.memento.contract.Memento;
+<i>5</i>&nbsp;import fr.istic.aco.editor.receiver.contract.Engine;
+<i>6</i>&nbsp;import fr.istic.aco.editor.receiver.contract.Recorder;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.io.PrintStream;
+<i>9</i>&nbsp;import java.util.Objects;
+<i>10</i>&nbsp;import java.util.Optional;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;/**
+<i>13</i>&nbsp; * Concrete command of cut action
+<i>14</i>&nbsp; */
+<i>15</i>&nbsp;public class CutCommand implements Command {
+<i>16</i>&nbsp;    private final Engine receiver;
+<i>17</i>&nbsp;    private final Recorder recorder;
+<i>18</i>&nbsp;    private final PrintStream output;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    /**
+<i>21</i>&nbsp;     * Main constructor
+<i>22</i>&nbsp;     * @param receiver of the command
+<i>23</i>&nbsp;     * @param recorder saves the command
+<i>24</i>&nbsp;     * @param output
+<i>25</i>&nbsp;     */
+<b class="fc"><i>26</i>&nbsp;    public CutCommand(Engine receiver, Recorder recorder, PrintStream output) {</b>
+<b class="fc"><i>27</i>&nbsp;        this.output = output;</b>
+<b class="fc"><i>28</i>&nbsp;        Objects.requireNonNull(receiver);</b>
+<b class="fc"><i>29</i>&nbsp;        Objects.requireNonNull(recorder);</b>
+<b class="fc"><i>30</i>&nbsp;        this.receiver = receiver;</b>
+<b class="fc"><i>31</i>&nbsp;        this.recorder = recorder;</b>
+<b class="fc"><i>32</i>&nbsp;    }</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    @Override
+<i>35</i>&nbsp;    public void execute() {
+<b class="fc"><i>36</i>&nbsp;        if (!recorder.isReplaying()) {</b>
+<b class="fc"><i>37</i>&nbsp;            receiver.cutSelectedText();</b>
+<b class="fc"><i>38</i>&nbsp;            if (recorder.isRecording()) {</b>
+<b class="nc"><i>39</i>&nbsp;                recorder.save(this);</b>
+<i>40</i>&nbsp;            }
+<i>41</i>&nbsp;        } else {
+<b class="nc"><i>42</i>&nbsp;            receiver.cutSelectedText();</b>
+<i>43</i>&nbsp;        }
+<i>44</i>&nbsp;
+<b class="fc"><i>45</i>&nbsp;        output.println(&quot;Contenu du presse papier : &quot; + receiver.getClipboardContents());</b>
+<b class="fc"><i>46</i>&nbsp;    }</b>
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    @Override
+<i>49</i>&nbsp;    public Optional&lt;Memento&gt; getMemento() {
+<b class="nc"><i>50</i>&nbsp;        return Optional.empty();</b>
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    @Override
+<i>54</i>&nbsp;    public void setMemento(Memento memento) {
+<i>55</i>&nbsp;
+<b class="nc"><i>56</i>&nbsp;    }</b>
+<i>57</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-12-20 21:34</div>
+</div>
+</body>
+</html>

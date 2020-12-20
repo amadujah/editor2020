@@ -1,0 +1,68 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Originator</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">fr.istic.aco.editor.memento.contract</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Originator (fr.istic.aco.editor.memento.contract)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">Originator</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package fr.istic.aco.editor.memento.contract;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.Optional;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * Originator API
+<i>7</i>&nbsp; */
+<i>8</i>&nbsp;public interface Originator {
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    /**
+<i>11</i>&nbsp;     * Save the state
+<i>12</i>&nbsp;     * @return the saved state memento
+<i>13</i>&nbsp;     */
+<i>14</i>&nbsp;    Optional&lt;Memento&gt; getMemento();
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * Restore the state
+<i>18</i>&nbsp;     * @param memento the memento which state is restored
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    void setMemento(Memento memento);
+<i>21</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-12-20 21:34</div>
+</div>
+</body>
+</html>

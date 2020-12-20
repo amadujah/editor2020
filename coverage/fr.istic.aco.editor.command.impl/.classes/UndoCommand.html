@@ -1,0 +1,117 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: UndoCommand</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">fr.istic.aco.editor.command.impl</a> ]
+</div>
+
+<h1>Coverage Summary for Class: UndoCommand (fr.istic.aco.editor.command.impl)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UndoCommand</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (2/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    71.4%
+  </span>
+  <span class="absValue">
+    (5/ 7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package fr.istic.aco.editor.command.impl;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import fr.istic.aco.editor.command.contract.Command;
+<i>4</i>&nbsp;import fr.istic.aco.editor.memento.contract.Memento;
+<i>5</i>&nbsp;import fr.istic.aco.editor.receiver.impl.UndoManager;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.Optional;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public class UndoCommand implements Command {
+<i>10</i>&nbsp;    private final UndoManager undoManager;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    /**
+<i>13</i>&nbsp;     * Main constructor
+<i>14</i>&nbsp;     * @param undoManager contains the undo action
+<i>15</i>&nbsp;     */
+<b class="fc"><i>16</i>&nbsp;    public UndoCommand(UndoManager undoManager) {</b>
+<b class="fc"><i>17</i>&nbsp;        this.undoManager = undoManager;</b>
+<b class="fc"><i>18</i>&nbsp;    }</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    @Override
+<i>21</i>&nbsp;    public void execute() {
+<b class="fc"><i>22</i>&nbsp;        undoManager.undo();</b>
+<b class="fc"><i>23</i>&nbsp;    }</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    @Override
+<i>26</i>&nbsp;    public Optional&lt;Memento&gt; getMemento() {
+<b class="nc"><i>27</i>&nbsp;        return Optional.empty();</b>
+<i>28</i>&nbsp;    }
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    @Override
+<i>31</i>&nbsp;    public void setMemento(Memento memento) {
+<i>32</i>&nbsp;
+<b class="nc"><i>33</i>&nbsp;    }</b>
+<i>34</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-12-20 21:34</div>
+</div>
+</body>
+</html>
