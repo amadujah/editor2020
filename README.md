@@ -41,7 +41,7 @@ la branche correspondante et lancer la classe EditorConfigurator.
 -     **`Undo`** 
         Pour défaire la dernière action
  
--    **`Redo`* 
+-    **`Redo`** 
         Pour refaire la dernière action annulée
  
 -    **`Replay`** 
