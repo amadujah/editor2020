@@ -11,7 +11,7 @@ la branche correspondante et lancer la classe EditorConfigurator.
 - version-2 : pour tester la version 2
 - version-3 : pour tester la version 3
 2. Lancer la classe EditorConfigurator
-3. Taper les commandes demandées pour effectuer une action.
+3. Taper les commandes affichées pour effectuer une action.
 
 # Visualiser la javadoc
 Pour visualiser la javadoc, lancer le fichier index.html du dossier javadocs
