@@ -12,6 +12,14 @@ public class EditorConfigurator {
 
     public static void main(String[] lineArgs) {
 
+
+        System.out.println("*** Tapez les commandes suivantes : ***");
+        System.out.println("*Insert* pour insérer du texte");
+        System.out.println("*Select* pour sélectionner un contenu");
+        System.out.println("*Copy* pour copier le texte selectionné");
+        System.out.println("*Delete* pour supprimé le texte selectionné");
+        System.out.println("*Cut* pour couper le texte selectionné");
+        System.out.println("*Paste* pour coller le contenu du texte");
         EditorConfigurator client = new EditorConfigurator();
         client.run();
 
