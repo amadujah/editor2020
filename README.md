@@ -12,41 +12,40 @@ la branche correspondante et lancer la classe EditorConfigurator.
 - version-3 : pour tester la version 3
 2. Lancer la classe EditorConfigurator
 3. Taper les commandes suivantes :
-  
--   **`Insert`** 
-        Insérer votre texte à la nouvelle ligne puis entrée
- 
--    **`Select`** 
-        - [ ] Saisir le début de la sélection à la nouvelle ligne puis entrée
-        - [ ] Saisir la fin de la sélection 
 
--    **`Delete`** 
+-   **`Insert`**
+		Insérer votre texte à la nouvelle ligne puis entrée
+
+-    **`Select`**
+		Saisir le début de la sélection à la nouvelle ligne puis entrée
+		Puis saisir la fin de la sélection
+
+-    **`Delete`**
         Pour supprimer la sélection
- 
+
 -    **`Copy`**
         Pour copier le texte selectionné
- 
--    **`Cut`** 
+
+-    **`Cut`**
         Pour couper le texte selectionné
- 
--    **`Paste`** 
+
+-    **`Paste`**
         Pour coller le contenu du texte
- 
--    **`Start`** 
+
+-    **`Start`**
         Pour démarrer l'enregistrement
 
--     **`Stop`** 
+-     **`Stop`**
         Pour arrêter l'enregistrement
 
--     **`Undo`** 
-        Pour défaire la dernière action
- 
--    **`Redo`** 
-        Pour refaire la dernière action annulée
- 
--    **`Replay`** 
+-    **`Replay`**
         Pour rejouer les actions enregistrées
-    
+
+-     **`Undo`**
+        Pour défaire la dernière action
+
+-    **`Redo`**
+        Pour refaire la dernière action annulée
 
 # Visualiser la javadoc
 Pour visualiser la javadoc, lancer le fichier index.html du dossier javadocs
