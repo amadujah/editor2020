@@ -17,9 +17,9 @@ la branche correspondante et lancer la classe EditorConfigurator.
         Insérer votre texte à la nouvelle ligne puis entrée
  
 -    **`Select`** 
-        Saisir le début de la sélection à la nouvelle ligne puis entrée
-        Saisir la fin de la sélection 
- 
+        - [ ] Saisir le début de la sélection à la nouvelle ligne puis entrée
+        - [ ] Saisir la fin de la sélection 
+
 -    **`Delete`** 
         Pour supprimer la sélection
  
