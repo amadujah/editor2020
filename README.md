@@ -15,3 +15,7 @@ la branche correspondante et lancer la classe EditorConfigurator.
 
 # Visualiser la javadoc
 Pour visualiser la javadoc, lancer le fichier index.html du dossier javadocs
+
+# Visualiser la couverture des tests
+Pour visualiser la couverture des tests, lancer le fichier index.html du dossier coverage
+
